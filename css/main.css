@@ -30,8 +30,16 @@ header {
     padding: 1em 0em;
 }
 
+.home-button{
+    color: #E6DB74;
+}
+
 header a {
     color: #75715E;
+}
+
+header a:hover {
+    color: #F92672
 }
 
 nav {
@@ -62,7 +70,7 @@ nav ul li a {
     font-size: 3em;
     color: #E6DB74;
     position: absolute;
-    bottom: 220px;
+    bottom: 30%;
     left: 2em;
 }
 
