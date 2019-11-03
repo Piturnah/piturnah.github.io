@@ -12,9 +12,7 @@ ul {
     padding: 0;
 }
 
-a {
-    text-decoration: none;
-}
+a { text-decoration: none; }
 
 .home-button {
     font-size: 1.4em;
@@ -30,34 +28,19 @@ header {
     padding: 1em 0em;
 }
 
-.home-button{
-    color: #E6DB74;
-}
+.home-button{ color: #E6DB74; }
 
-header a {
-    color: #75715E;
-}
-
-header a:hover {
-    color: #F92672
-}
+header a { color: #75715E; }
+header a:hover { color: #F92672 }
 
 nav {
     font-size: 1.4em;
     padding-right: 4em;
 }
 
-nav ul {
-    display: flex;
-}
-
-nav ul li {
-    float: left;
-}
-
-nav ul li a {
-    padding: 1.5em;
-}
+nav ul { display: flex; }
+nav ul li { float: left; }
+nav ul li a { padding: 1.5em; }
 
 .bg-image {
     width: 60%;
@@ -72,8 +55,7 @@ nav ul li a {
     position: absolute;
     bottom: 30%;
     left: 2em;
+    text-shadow: .06em .06em 10px #000000;
 }
 
-.domain {
-    color: #66D9EF;
-}
+.domain { color: #66D9EF; }

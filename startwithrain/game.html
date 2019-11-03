@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Start With Rain</title>
+    <title>Piturnah.xyz | Start With Rain</title>
     <link rel="shortcut icon" href="/images/icon.png">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -12,20 +12,15 @@
     <script>
       var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Start With Rain Web.json", {onProgress: UnityProgress});
     </script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script> 
+      $(function(){
+          $("#header").load("/assets/header.html"); 
+      });
+    </script> 
   </head>
   <body>
-    <header>
-        <a href="/index.html" class="home-button">piturnah<span class="domain">.xyz</span></a>
-        <nav>
-            <ul>
-                <li><a href="#">about</a></li>
-                <li><a href="#">links</a></li>
-                <li><a href="https://github.com/Piturnah" target="_blank">portfolio</a></li>
-                <li><a href="#">contact</a></li>
-                <li><a href="#">game</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div id="header"></div>
     <div class="webgl-content">
       <div id="unityContainer" style="width: 960px; height: 540px"></div>
       <div class="footer">
