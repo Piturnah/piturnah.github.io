@@ -42,10 +42,64 @@ nav ul { display: flex; }
 nav ul li { float: left; }
 nav ul li a { padding: 1.5em; }
 
-.bg-image {
-    width: 60%;
-    opacity: .47;
-    margin: 1em;
+.hero::after {
+    content: "";
+    background-image: url(/images/background.png);
+    height: 500vh;
+    background-size: 60%;
+    background-position: 2% 20%;
+    opacity: 0.37;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;  
+    background-repeat: repeat-y;
+}
+
+.carousel-container {
+    width: 600px;
+    border: 5px solid #000000;
+    overflow: hidden;
+    position: absolute;
+    top: 25%;
+    right: 7%;
+    z-index: -1;
+}
+
+.carousel-container img {
+    width: 100%;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 100%;
+    height: 339px;
+}
+
+#prevBtn {
+    position: absolute;
+    bottom: 50%;
+    z-index: 10;
+    left: 5%;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: top;
+    opacity: .5;
+}
+
+#nextBtn {
+    position: absolute;
+    bottom: 50%;
+    z-index: 10;
+    right: 5%;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: 50;
+    opacity: .5;
 }
 
 .logo {
@@ -53,7 +107,7 @@ nav ul li a { padding: 1.5em; }
     font-size: 3em;
     color: #E6DB74;
     position: absolute;
-    bottom: 30%;
+    top: 35vh;
     left: 2em;
     text-shadow: .06em .06em 10px #000000;
 }
