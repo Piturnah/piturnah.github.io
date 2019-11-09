@@ -23,10 +23,10 @@
         <section>
             <div class="hero">
                 <div class="logo">
-                    <h1 class="scroll" data-rate="-1">piturnah<span class="domain">.xyz</span></h1>
+                    <h1 class="scroll" data-rate="-3" data-dir="X">piturnah<span class="domain">.xyz</span></h1>
                 </div>
             </div>
-            <div class="carousel-container scroll" data-rate="5">
+            <div class="carousel-container scroll" data-rate="3" data-dir="X">
                 <i class="fas fa-arrow-left" id="prevBtn"></i>
                 <i class="fas fa-arrow-right" id="nextBtn"></i>
                 <div class="carousel-slide">
@@ -46,10 +46,17 @@
 
                 for (var i = 0; i < target.length; i++) {
                     var pos = window.pageYOffset * target[i].dataset.rate;
-                    target[i].style.transform = "translate3d(0px,"+pos+"px, 0px)";
+                    if (target[i].dataset.dir != "X") {
+                        target[i].style.transform = "translate3d(0px,"+pos+"px, 0px)";
+                    } else {
+                        target[i].style.transform = "translate3d("+pos+"px, "+window.pageYOffset+"px, 0px)";
+                    }
                 }
             });
         </script>
+        <div class="main-container scroll" data-rate="-1">
+            <h1>About</h1><p>This section is still under development</p>
+        </div>
     </div>
 
     <script src="/assets/app.js"></script>

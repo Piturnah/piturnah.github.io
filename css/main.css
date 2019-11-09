@@ -58,6 +58,18 @@ nav ul li a { padding: 1.5em; }
     background-repeat: repeat-y;
 }
 
+.main-container {
+    width: 80%;
+    position: relative;
+    height: 500vh;
+    margin: auto;
+    margin-top: 110vh;
+    background-color: #00000066;
+    color: #E6DB74;
+    padding: .5em;
+    text-align: center;
+}
+
 .carousel-container {
     width: 600px;
     border: 5px solid #000000;
