@@ -12,13 +12,30 @@
         <a href="/index.html" class="home-button">piturnah<span class="domain">.xyz</span></a>
         <nav>
             <ul>
-                <li><a href="https://github.com/Piturnah">About</a></li>
+                <li id="about"><a href="/index.html#about">About</a></li>
                 <li><a href="https://github.com/Piturnah">Portfolio</a></li>
                 <li><a href="/startwithrain/game.html">LD45</a></li>
                 <li><a href="/tetrisepq/program.html">EPQ</a></li>
             </ul>
         </nav>
     </header>
+    <script>
+        //window.onload = function name(params) {
+        //    scrollTo(".main-container");
+        //}
+        //$("#about").click(function() {
+        //    console.log("test");
+        //    scrollTo(".main-container");
+        //});
+
+        function scrollTo(div) {
+            var target = document.querySelector(div);
+            var rate = target.dataset.rate;
+            $("html,body").animate({
+                scrollTop: $(div).offset().top
+            }, "slow");
+        }
+    </script>
 </body>
 
 </html>
