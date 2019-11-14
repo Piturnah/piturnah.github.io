@@ -13,7 +13,7 @@ ul {
     padding: 0;
 }
 
-a { text-decoration: none; }
+a { text-decoration: none; color: #66D9EF; }
 
 .home-button {
     font-size: 1.4em;
@@ -36,7 +36,7 @@ header {
 .home-button{ color: #E6DB74; }
 
 header a { color: #75715E; }
-header a:hover { color: #F92672 }
+a:hover { color: #F92672 }
 
 nav {
     font-size: 1.4em;
@@ -63,17 +63,32 @@ nav ul li a { padding: 1.5em; }
     background-repeat: repeat-y;
 }
 
-.about {
+.main-container {
     width: 80%;
-    position: relative;
-    height: 500vh;
     margin: auto;
-    margin-top: 110vh;
     background-color: #00000066;
-    color: #E6DB74;
-    padding: .5em;
-    text-align: center;
+    text-align: justify;
+    text-justify: inter-word;
+    padding: .5em 1em;
+    position: relative;
+    margin-top: 120vh;
 }
+
+.main-container img {
+    width: 70%;
+    display: block;
+    margin: auto;
+}
+
+.about {
+    width: 100%;
+    position: relative;
+    margin: auto;
+    color: #E6DB74;
+}
+
+.main-container h1 { text-align: center; }
+.main-container h2 { text-align: center; }
 
 .carousel-container {
     width: 600px;

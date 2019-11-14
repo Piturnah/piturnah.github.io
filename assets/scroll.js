@@ -12,7 +12,7 @@ function scroll() {
 
     if (page_id == "about") {
         $("html, body").animate({
-            scrollTop: $("#scroll-"+page_id).offset().top - 400/768 * window.screen.height
+            scrollTop: $("#scroll-"+page_id).offset().top - 465/768 * window.screen.height
         }, "slow");
     }
 }
