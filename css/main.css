@@ -47,10 +47,10 @@ nav ul { display: flex; }
 nav ul li { float: left; }
 nav ul li a { padding: 1.5em; }
 
-.hero::after {
+body::after {
     content: "";
     background-image: url(/images/background.png);
-    height: 500vh;
+    height: 300vh;
     background-size: 60%;
     background-position: 2% 20%;
     opacity: 0.37;
