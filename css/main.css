@@ -87,6 +87,20 @@ body::after {
     color: #E6DB74;
 }
 
+.footer-warning {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 3em;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    color: #F92672
+}
+
 .main-container h1 { text-align: center; }
 .main-container h2 { text-align: center; }
 
