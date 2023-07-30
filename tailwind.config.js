@@ -17,7 +17,10 @@ export default {
       montserrat: ["Montserrat", "sans-serif"],
     },
     backgroundImage: {
-      background: "url('static/background.png')",
+      background: "url('background.png')",
+    },
+    backgroundSize: {
+      "60%": "60%",
     },
     dropShadow: {
       "3xl": "0.06em 0.06em 10px #000000",

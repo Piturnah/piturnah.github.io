@@ -6,6 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-grey-300 font-montserrat;
+    @apply min-h-screen bg-grey-300 font-montserrat before:absolute before:z-[-1] before:h-full
+    before:w-full before:bg-background before:bg-60% before:bg-repeat-y before:opacity-[0.37] before:content-[""];
   }
 }
