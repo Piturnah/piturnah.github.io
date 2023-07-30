@@ -1,3 +1,7 @@
+<script>
+  import GitHubLogo from "./github-mark.svelte";
+</script>
+
 <div
   class="flex items-center justify-between border-b border-grey-600 bg-grey-200 px-20 py-3 font-bold"
 >
@@ -14,6 +18,11 @@
       </li>
       <li class="hover:text-pink"><a href="/">LD45</a></li>
       <li class="hover:text-pink"><a href="/">Tetris</a></li>
+      <li class="hover:text-pink">
+        <a href="https://github.com/Piturnah/piturnah.github.io">
+          <GitHubLogo />
+        </a>
+      </li>
     </ul>
   </nav>
 </div>
