@@ -1,4 +1,5 @@
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-</p>
+<h1
+  class="fixed inset-y-1/2 left-20 text-7xl font-bold text-yellow drop-shadow-3xl"
+>
+  piturnah<span class="text-blue">.xyz</span>
+</h1>

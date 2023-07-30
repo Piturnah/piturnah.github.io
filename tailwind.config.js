@@ -6,6 +6,7 @@ export default {
     colors: {
       grey: {
         200: "#1C1D19",
+        300: "#272822",
         600: "#75715E",
       },
       pink: "#F92672",
@@ -14,6 +15,12 @@ export default {
     },
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
+    },
+    backgroundImage: {
+      background: "url('static/background.png')",
+    },
+    dropShadow: {
+      "3xl": "0.06em 0.06em 10px #000000",
     },
   },
   plugins: [],
