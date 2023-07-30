@@ -17,7 +17,7 @@ export default {
       montserrat: ["Montserrat", "sans-serif"],
     },
     backgroundImage: {
-      background: "url('background.png')",
+      background: "url('/background.png')",
     },
     backgroundSize: {
       "60%": "60%",
