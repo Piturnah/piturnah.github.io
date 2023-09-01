@@ -28,4 +28,3 @@ jobs:
         branch: ci/build
         delete-branch: true
         title: Update build
-        path: _build
