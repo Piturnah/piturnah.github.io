@@ -18,10 +18,11 @@ jobs:
         override: true
     - run: cargo install --git https://github.com/Piturnah/shovel-ssg
     - uses: actions/checkout@v3
+      with:
+        ref: dist
+    - run: git fetch origin main
+    - run: git reset --hard origin/main
     - run: shovel
-    - run: git fetch origin dist
-    - run: git reset --soft origin/dist
-    - run: git reset
     - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
     - run: "mv _build/* _build/.* . || :"
     - name: Create Pull Request
