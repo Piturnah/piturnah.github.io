@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: ["dsssg"]
+  pull_request:
+    branches: ["dsssg"]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+    - run: cargo install --git https://github.com/Piturnah/shovel-ssg
+    - uses: actions/checkout@v3
+      with:
+        ref: dsssg
+    - run: shovel
+    - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
+    - run: mv _build/* .
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: Update build
+        branch: ci/build
+        delete-branch: true
+        title: Update build
+        base: dist
