@@ -18,8 +18,6 @@ jobs:
         override: true
     - run: cargo install --git https://github.com/Piturnah/shovel-ssg
     - uses: actions/checkout@v3
-      with:
-        ref: dsssg
     - run: shovel
     - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
     - run: mv _build/* .
