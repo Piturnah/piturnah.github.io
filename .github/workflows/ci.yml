@@ -18,19 +18,10 @@ jobs:
         override: true
     - run: cargo install --git https://github.com/Piturnah/shovel-ssg
     - uses: actions/checkout@v3
-      with:
-        ref: dist
-    - run: git fetch origin main
-    - run: git reset --hard origin/main
     - run: shovel
     - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
     - run: "mv _build/* _build/.* . || :"
-    - run: rm -rf _build/
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
-      with:
-        commit-message: Update build
-        branch: ci/build
-        delete-branch: true
-        title: Update build
-        base: dist
+    - run: git checkout -b dist
+    - run: git commit -m "Update build"
+    - run: git rebase --root
+    - run: git push origin dist --force
