@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Piturnah.xyz | Asteroid Loop</title>
+  <link rel="shortcut icon" href="/images/icon.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/webgl.css">
+  <script src="/assets/webgl/UnityProgress.js"></script>
+  <script src="Build/UnityLoader.js"></script>
+  <script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "Build/thing build.json", { onProgress: UnityProgress });
+  </script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body>
+  <header>
+    <a href="/" class="home-button">piturnah<span class="domain">.xyz</span></a>
+    <nav>
+        <ul>
+            <li id="about"><a href="/#about">About</a></li>
+            <li><a href="https://github.com/Piturnah">Portfolio</a></li>
+            <li><a href="/start-with-rain/">LD45</a></li>
+            <li><a href="/tetris-epq/">Tetris</a></li>
+        </ul>
+    </nav>
+</header>
+
+  <div class="webgl-content">
+    <div id="unityContainer" style="width: 960px; height: 540px"></div>
+    <div class="footer">
+      <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+      <div class="title">Fullscreen</div>
+    </div>
+  </div>
+</body>
+
+</html>

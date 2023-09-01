@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="images/icon.png">
+    <title>Piturnah.xyz</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://kit.fontawesome.com/65d84acb17.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="/assets/scroll.js"></script>
+</head>
+
+<body>
+    <header>
+    <a href="/" class="home-button">piturnah<span class="domain">.xyz</span></a>
+    <nav>
+        <ul>
+            <li id="about"><a href="/#about">About</a></li>
+            <li><a href="https://github.com/Piturnah">Portfolio</a></li>
+            <li><a href="/start-with-rain/">LD45</a></li>
+            <li><a href="/tetris-epq/">Tetris</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="container">
+        <section>
+            <div class="hero">
+                <div class="logo">
+                    <h1 class="scroll" data-rate="-3" data-dir="X">piturnah<span class="domain">.xyz</span></h1>
+                </div>
+            </div>
+        </section>
+        <script>
+            window.addEventListener("scroll", function(e) {
+                const target = document.querySelectorAll(".scroll");
+                var scrolled = window.pageYOffset;
+
+                for (var i = 0; i < target.length; i++) {
+                    var pos = window.pageYOffset * target[i].dataset.rate;
+                    if (target[i].dataset.dir != "X") {
+                        target[i].style.transform = "translate3d(0px,"+pos+"px, 0px)";
+                    } else {
+                        target[i].style.transform = "translate3d("+pos+"px, "+window.pageYOffset+"px, 0px)";
+                    }
+                }
+            });
+        </script>
+        <div class="main-container scroll" data-rate="-1">
+            <div class="about" id="scroll-about">
+                <h1>About</h1>
+                <p>
+                    This section is still under construction, check back later
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="main-container footer-warning">
+        <b>Dear potential employers: This website is old and no longer supported, please do not consider it as a demonstration of my current abilities!</b>
+    </div>
+</body>
+
+</html>
