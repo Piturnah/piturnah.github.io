@@ -23,6 +23,7 @@ a { text-decoration: none; color: #66D9EF; }
 header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background: #1C1D19;
     border-bottom: 1px solid #75715E;
     font-weight: bold;
@@ -43,9 +44,12 @@ nav {
     padding-right: 4em;
 }
 
-nav ul { display: flex; }
+nav ul {
+    display: flex;
+    gap: 3.0em;
+    align-items: center;
+}
 nav ul li { float: left; }
-nav ul li a { padding: 1.5em; }
 
 body::after {
     content: "";
