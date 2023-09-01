@@ -21,7 +21,7 @@ jobs:
     - run: shovel
     - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
     - run: "mv _build/* _build/.* . || :"
-    - run: git fetch origin/dist
+    - run: git fetch origin dist
     - run: git reset --soft origin/dist
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
