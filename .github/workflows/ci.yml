@@ -25,6 +25,7 @@ jobs:
     - run: shovel
     - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
     - run: "mv _build/* _build/.* . || :"
+    - run: rm -rf _build/
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
