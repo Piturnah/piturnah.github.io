@@ -21,6 +21,9 @@ jobs:
       with:
         ref: dsssg
     - run: shovel
+    - run: shopt -s extglob
+    - run: rm -r !(_build/)
+    - run: mv -r _build/* .
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
