@@ -30,3 +30,4 @@ jobs:
         branch: ci/build
         delete-branch: true
         title: Update build
+        base: dist
