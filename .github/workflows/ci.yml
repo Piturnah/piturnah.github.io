@@ -17,7 +17,7 @@ jobs:
         toolchain: stable
         profile: minimal
         override: true
-    - run: cargo install --git https://github.com/Piturnah/shovel-ssg
+    - run: cargo install --git https://github.com/Piturnah/shovel-ssg --no-default-features
     - uses: actions/checkout@v3
     - run: shovel
     - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
