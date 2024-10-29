@@ -1,9 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
+@font-face {
+  font-family: "iosevka";
+  src: url("/assets/fonts/Iosevka-Regular.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: "iosevka";
+  src: url("/assets/fonts/Iosevka-Medium.woff2") format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "iosevka";
+  src: url("/assets/fonts/Iosevka-SemiBold.woff2") format('woff2');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "iosevka-slab";
+  src: url("/assets/fonts/IosevkaSlab-Regular.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: "iosevka-slab";
+  src: url("/assets/fonts/IosevkaSlab-Medium.woff2") format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "iosevka-slab";
+  src: url("/assets/fonts/IosevkaSlab-SemiBold.woff2") format('woff2');
+  font-weight: 700;
+}
 
 body {
     margin: 0;
     background: #272822;
-    font-family: "Cutive Mono", monospace;
+    font-family: "iosevka-slab", monospace;
     overflow-x: hidden;
 }
 
@@ -113,7 +145,7 @@ body::after {
 
 .box > ul {
     font-size: 1.7em;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .hero a {
