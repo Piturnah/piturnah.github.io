@@ -14,39 +14,18 @@
 </head>
 
 <body>
-    <#header />
-    <div class="container">
-        <section>
-            <div class="hero">
-                <div class="logo">
-                    <h1 class="scroll" data-rate="-3" data-dir="X">piturnah<span class="domain">.xyz</span></h1>
-                </div>
-            </div>
-        </section>
-        <script>
-            window.addEventListener("scroll", function(e) {
-                const target = document.querySelectorAll(".scroll");
-                var scrolled = window.pageYOffset;
-
-                for (var i = 0; i < target.length; i++) {
-                    var pos = window.pageYOffset * target[i].dataset.rate;
-                    if (target[i].dataset.dir != "X") {
-                        target[i].style.transform = "translate3d(0px,"+pos+"px, 0px)";
-                    } else {
-                        target[i].style.transform = "translate3d("+pos+"px, "+window.pageYOffset+"px, 0px)";
-                    }
-                }
-            });
-        </script>
-        <div class="main-container scroll" data-rate="-1">
-            <div class="about" id="scroll-about">
-                <h1>About</h1>
-                <p>
-                    This section is still under construction, check back later
-                </p>
-            </div>
+  <div class="container">
+    <section>
+      <div class="hero">
+        <div class="logo">
+          <h1 class="scroll" data-rate="-3" data-dir="X">piturnah<span class="domain">.xyz</span></h1>
         </div>
-    </div>
+        <div class="box">
+          <#links />
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 
 </html>
