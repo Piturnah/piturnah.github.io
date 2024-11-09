@@ -1,4 +1,4 @@
-# Building a Create-Your-Own-Adventure Style Text Game Using Day 1 Haskell
+# Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell
 
 -# 2024-11-09 #-
 
@@ -112,7 +112,7 @@ main = loop 0
 
 Now all we have to do is implement our two undefined functions from earlier. We'll start with `determineNextChoice` as it's the easier of the two.
 
-`deterineNextChoice` takes a `Choice` and an input string and determines the global index of the choice corresponding to the option the player wants to take. In order for this to make sense, we have to define what kind of input we're expecting.
+`determineNextChoice` takes a `Choice` and an input string and determines the global index of the choice corresponding to the option the player wants to take. In order for this to make sense, we have to define what kind of input we're expecting.
 
 Let's say the user will see something like this:
 
