@@ -39,13 +39,17 @@ body {
     overflow-x: hidden;
 }
 
+code {
+    font-family: "iosevka-slab", monospace;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-a { text-decoration: none; color: #66D9EF; }
+a { color: #66D9EF; }
 
 .home-button {
     font-size: 1.4em;
@@ -68,7 +72,7 @@ header {
 
 .home-button{ color: #E6DB74; }
 
-header a { color: #75715E; }
+header a { text-decoration: none; color: #75715E; }
 a:hover { color: #F92672 }
 
 nav {
@@ -88,14 +92,16 @@ body::after {
     background-image: url(/images/background.png);
     background-size: 60%;
     background-position: 2% 20%;
+    background-attachment: fixed;
+    background-repeat: repeat-y;
     opacity: 0.37;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    position: absolute;
+    height: 100%;
+    position: fixed;
     z-index: -1;  
-    background-repeat: repeat-y;
 }
 
 .about {
@@ -120,6 +126,12 @@ body::after {
 }
 
 .main-container h1 { text-align: center; }
+
+:root {
+    color: #E6DB74;
+    font-variant-ligatures: normal;
+}
+
 .main-container h2 { text-align: center; }
 
 .hero {

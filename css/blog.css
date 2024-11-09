@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "iosevka-etoile";
+  src: url("/assets/fonts/IosevkaEtoile-Regular.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: "iosevka-etoile";
+  src: url("/assets/fonts/IosevkaEtoile-Medium.woff2") format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "iosevka-etoile";
+  src: url("/assets/fonts/IosevkaEtoile-Italic.woff2") format('woff2');
+  font-style: italic;
+}
+
+body {
+    font-family: "iosevka-etoile";
+}
+
+blockquote {
+    font-style: italic;
+}
+
+blockquote code {
+    font-style: normal;
+}
+
+.box {
+    margin: auto;
+    font-size: 1.5em;
+    width: 50em;
+    background-color: #00000080;
+}
+
+p { color: #d6d6d6; }
+li { color: #d6d6d6; }
+
+p > code { color: #E6DB74; background: #00000031; }
+
+h1 {
+    text-decoration: underline;
+    text-decoration-color: #F92672;
+}
+
+h2 {
+    text-decoration: underline;
+    text-decoration-color: #F92672;
+}
+
+h3 {
+    text-decoration: underline;
+    text-decoration-color: #F92672;
+}
