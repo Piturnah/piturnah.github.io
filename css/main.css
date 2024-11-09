@@ -153,6 +153,7 @@ body::after {
     margin-top: 1em;
     background-color: #00000066;
     padding: 1em;
+    backdrop-filter: blur(10px);
 }
 
 .box > ul {
