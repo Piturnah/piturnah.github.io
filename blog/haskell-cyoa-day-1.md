@@ -1,6 +1,6 @@
 # Building a Create-Your-Own-Adventure Style Text Game Using Day 1 Haskell
 
--# 2024-11-09
+-# 2024-11-09 #-
 
 I have been writing a lot of Haskell lately, and enjoying it a great deal. This has come to be due to my final year university project in [PL theory](https://en.wikipedia.org/wiki/Programming_language_theory). Haskell is a very versatile language with an extremely expressive type system that can be a joy to write, but beginners often struggle to get a foothold on it. Coming from the world of imperative languages, there's a lot of new abstractions to become familiar with (such as the dreaded Monad), as we are ripped from our world of writing precedures to one where we must get by with function composition alone.
 
