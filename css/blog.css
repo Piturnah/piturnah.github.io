@@ -41,16 +41,19 @@ li { color: #d6d6d6; }
 p > code { color: #E6DB74; background: #00000031; }
 
 h1 {
-    text-decoration: underline;
     text-decoration-color: #F92672;
+    text-decoration-color: #F92672;
+    text-shadow: .05em .05em 2px #f92672;
 }
 
 h2 {
-    text-decoration: underline;
     text-decoration-color: #F92672;
+    text-decoration-color: #F92672;
+    text-shadow: .05em .05em 2px #f92672;
 }
 
 h3 {
-    text-decoration: underline;
     text-decoration-color: #F92672;
+    text-decoration-color: #F92672;
+    text-shadow: .05em .05em 2px #f92672;
 }
