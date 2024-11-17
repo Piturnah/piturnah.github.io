@@ -32,6 +32,10 @@
   font-weight: 700;
 }
 
+html {
+    font-size: 24px;
+}
+
 body {
     margin: 0;
     background: #272822;
@@ -52,7 +56,7 @@ ul {
 a { color: #66D9EF; }
 
 .home-button {
-    font-size: 1.4em;
+    font-size: 0.93rem;
     padding-left: 4em;
 }
 
@@ -63,7 +67,7 @@ header {
     background: #1C1D19;
     border-bottom: 1px solid #75715E;
     font-weight: bold;
-    padding: 1em 0em;
+    padding: 0.67em 0em;
     position: fixed;
     top: 0;
     width: 100%;
@@ -76,7 +80,7 @@ header a { text-decoration: none; color: #75715E; }
 a:hover { color: #F92672 }
 
 nav {
-    font-size: 1.4em;
+    font-size: 0.93rem;
     padding-right: 4em;
 }
 
@@ -136,7 +140,7 @@ body::after {
 
 .hero {
     margin: auto;
-    margin-top: 5em;
+    margin-top: 3.33em;
     width: fit-content;
     top: 35vh;
     left: 2em;
@@ -145,7 +149,7 @@ body::after {
 
 .hero .logo {
     font-weight: bolder;
-    font-size: 3em;
+    font-size: 2em;
     text-shadow: .06em .06em 10px #000000;
 }
 
@@ -156,8 +160,10 @@ body::after {
     backdrop-filter: blur(10px);
 }
 
+.hero .box { padding: 0.67em; margin-top: 0.67em; }
+
 .box > ul {
-    font-size: 1.7em;
+    font-size: 1.13rem;
     font-weight: 500;
 }
 

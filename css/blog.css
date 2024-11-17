@@ -17,7 +17,7 @@
 
 body {
     font-family: "iosevka-etoile";
-    margin-top: 7em;
+    margin-top: 4.67em;
 }
 
 blockquote {
@@ -30,8 +30,7 @@ blockquote code {
 
 .box {
     margin: auto;
-    font-size: 1.5em;
-    width: 50em;
+    font-size: 1em;
     background-color: #00000080;
 }
 
@@ -57,3 +56,25 @@ h3 {
     text-decoration-color: #F92672;
     text-shadow: .05em .05em 2px #f92672;
 }
+
+.main-content {
+    width: 52.1875rem;
+    margin: auto;
+}
+
+mastodon-comments {
+    --font-color: #999FAD;
+    --block-background-color: #00000080;
+    --block-border-width: 0px;
+    --block-border-radius: 0px;
+}
+
+.mastodon-comment {
+    backdrop-filter: blur(10px);
+}
+
+.mastodon-comment .status a { color: #5d686f !important; }
+
+.mastodon-comment .status .replies a:hover { color: #9e86c8 !important; }
+.mastodon-comment .status .reblogs a:hover { color: #a6e22e !important; }
+.mastodon-comment .status .favourites a:hover { color: #e87d3e !important; }
