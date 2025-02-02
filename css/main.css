@@ -55,6 +55,16 @@ ul {
 
 a { color: #66D9EF; }
 
+.webring {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.webring > a {
+    text-decoration: none !important;
+}
+
 .home-button {
     font-size: 0.93rem;
     padding-left: 4em;
