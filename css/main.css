@@ -32,6 +32,23 @@
   font-weight: 700;
 }
 
+@font-face {
+  font-family: "iosevka-etoile";
+  src: url("/assets/fonts/IosevkaEtoile-Regular.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: "iosevka-etoile";
+  src: url("/assets/fonts/IosevkaEtoile-Medium.woff2") format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "iosevka-etoile";
+  src: url("/assets/fonts/IosevkaEtoile-Italic.woff2") format('woff2');
+  font-style: italic;
+}
+
 html {
     font-size: 24px;
 }
@@ -115,14 +132,7 @@ body::after {
     right: 0;
     height: 100%;
     position: fixed;
-    z-index: -1;  
-}
-
-.about {
-    width: 100%;
-    position: relative;
-    margin: auto;
-    color: #E6DB74;
+    z-index: -1;
 }
 
 .footer-warning {
@@ -137,6 +147,11 @@ body::after {
     justify-content: center;
     margin: auto;
     color: #F92672
+}
+
+.container {
+    max-width: 52rem;
+    margin: auto;
 }
 
 .main-container h1 { text-align: center; }
@@ -155,6 +170,7 @@ body::after {
     top: 35vh;
     left: 2em;
     color: #E6DB74;
+    margin-bottom: 1em;
 }
 
 .hero .logo {
@@ -177,6 +193,14 @@ body::after {
     font-weight: 500;
 }
 
+.about {
+    font-family: "iosevka-etoile", monospace;
+}
+
+.about > h2 {
+    margin: 0;
+}
+
 .hero a {
     text-decoration: underline;
 }
@@ -186,3 +210,10 @@ h1 {
 }
 
 .domain { color: #66D9EF; }
+
+.simple-link {
+    text-decoration: none !important;
+    color: #E6DB74;
+}
+
+p { color: #d6d6d6; }
