@@ -24,7 +24,7 @@ What confused me so much was not *what* it was, but *how* it was. We are told `F
 
 ## What elements are we actually dealing with?
 
-We can answer by examining each constructor in turn, where I will bring back the implicit `∀` as I believe it makes the understanding a lot easier. I'm going to be going back and forth between reasoning in \(\mathbf{Set}\) and \(\mathbf{Type}\) depending on what feels the most natural.
+We can answer this question by examining each constructor in turn, where I will bring back the implicit `∀` as I believe it makes the understanding a lot easier. I'm going to be going back and forth between reasoning in \(\mathbf{Set}\) and \(\mathbf{Type}\) depending on what feels the most natural. Also, we take \(0 \in \mathbb{N}\) as convention.
 
 ### Rule 1
 
@@ -63,16 +63,16 @@ Consider \(m = \underset{m \text{ times}}{\left(\text{S} \circ \cdots \circ \tex
 
 We can directly apply our result from the last section to show that for all \(k \in \mathbb{N}\),
 \[a = \underset{m \text{ times}}{\left(\text{FS} \circ \cdots \circ \text{FS}\right)}\, \text{FZ} \in \text{Fin} (k + m + 1),\] so this is equivalent to finding some \(k \in \mathbb{N}\) such that \(k + m + 1 = n\). In other words, we need \[\mathbb{N} \ni k = n - m -1.\]
-But \(m < n\) by assumption, as \(m \in \mathbb{N}_{<n}\). So 
-\[\begin{aligned}&n - m \geq 1\\\implies & n - m - 1 \in \mathbb{N},\end{aligned}\] and we're done.
+But \(m < n\) by assumption, as \(m \in \mathbb{N}_{<n}\). So
+\[\begin{aligned}&n - m \geq 1\\\therefore\quad & n - m - 1 \in \mathbb{N},\end{aligned}\] but \(m \in \mathbb{N}_{<n}\) was chosen arbitrarily, and so we're done.
 
 ## The end
 
-In the end, it wasn't that complicated. So why was this type so confusing, at least for me? I think part of it was the Agda definition overloading the constructor names with those for `ℕ`, but also, as a [friend of mine](https://anna-maths.xyz/) put it:
+In the end, it wasn't that complicated. So why was this type so confusing, at least for me? In hindsight, I think it was largely because most of the introductions I've seen present the property as matter-of-fact, so I thought it should be immediately obvious from the definition (without considering an isomorphism), and felt confused when it wasn't. But the proof was not long, so maybe it *is* immediately obvious to you! Aside from that, as a [friend of mine](https://anna-maths.xyz/) put it:
 
 > It's not the most intuitive thing because you aren't [directly] defining the elements of one set, but defining which sets each possible element belongs to[.]
 
-I hope you found this post useful. If you did, you can let me know by leaving a comment via fedi (link below). If you thought it was terrible, or have constructive feedback, then you can also let me know in the same place! I'm sure I've made a mistake somewhere or missed something completely obvious. 
+I hope you found this post useful. If you did, you can let me know by leaving a comment via fedi (link below). If you thought it was terrible, or have constructive feedback, then you can also let me know in the same place! I'm sure I've made a mistake somewhere or missed something completely obvious.
 
 ### Footnotes
 
