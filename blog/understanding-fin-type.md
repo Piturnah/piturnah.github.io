@@ -1,3 +1,5 @@
+**Edit** 2025-02-22: I realised there is a much simpler proof which is also more intuitive. I sketched it in the comments. Will update post when I have time.
+
 # Understanding the Fin type
 
 -# 2025-02-21 #-
