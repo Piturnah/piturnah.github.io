@@ -70,7 +70,7 @@ But \(m < n\) by assumption, as \(m \in \mathbb{N}_{<n}\). So
 
 ## The end
 
-In the end, it wasn't that complicated. So why was this type so confusing, at least for me? In hindsight, I think it was largely because most of the introductions I've seen present the property as matter-of-fact, so I thought it should be immediately obvious from the definition (without considering an isomorphism), and felt confused when it wasn't. But the proof was not long, so maybe it *is* immediately obvious to you! Aside from that, as a [friend of mine](https://anna-maths.xyz/) put it:
+In the end, it wasn't that complicated. So why was this type so confusing, at least for me? In hindsight, Perhaps it was because of the overloading of the natural number data constructors in Agda, or maybe something else entirely. Aside from that, as a [friend of mine](https://anna-maths.xyz/) put it:
 
 > It's not the most intuitive thing because you aren't [directly] defining the elements of one set, but defining which sets each possible element belongs to[.]
 
