@@ -34,10 +34,17 @@ blockquote code {
     background-color: #00000080;
 }
 
-p { color: #d6d6d6; }
+p { color: #d6d6d6; line-height: 1.5; }
 li { color: #d6d6d6; }
 
-p > code { color: #E6DB74; background: #00000031; }
+p > code {
+	color: #E6DB74;
+	background: #00000054;
+	padding: 0.15em 0.4em;
+	border-radius: 0.35em;
+	text-shadow: 1px 1px 5px black;
+	box-shadow: inset 2px 2px 3px 0.2px black;
+}
 
 h1 {
     text-decoration-color: #F92672;
