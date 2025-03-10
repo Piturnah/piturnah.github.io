@@ -70,6 +70,12 @@ h3 {
     padding-bottom: 0.5rem;
 }
 
+.main-content ul {
+    list-style-type: initial;
+    margin-left: 1em;
+    list-style-position: inside;
+}
+
 mastodon-comments {
     --font-color: #999FAD;
     --block-background-color: #00000080;
