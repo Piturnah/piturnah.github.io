@@ -11,21 +11,19 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-    - name: Install Rust toolchain
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        profile: minimal
-        override: true
-    - run: cargo install --git https://codeberg.org/Piturnah/shovel-ssg --no-default-features
-    - uses: actions/checkout@v3
-    - run: shovel
-    - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_build/*" -not -name "_build" -delete
-    - run: "mv _build/* _build/.* . || :"
-    - run: git config --global user.email "noreply@github.com"
-    - run: git config --global user.name "GitHub"
-    - run: git checkout -b dist
-    - run: git add .
-    - run: git commit -m "Update build"
-    - run: git rebase --root
-    - run: git push origin dist --force
+      - name: Install Haskell
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.6.6'
+          cabal-version: '3.12.1.0'
+      - uses: actions/checkout@v3
+      - run: cabal new-run site build
+      - run: find . -not -path "./.git/*" -not -name ".git" -not -path "./_site/*" -not -name "_site" -delete
+      - run: "mv _site/* _site/.* . || :"
+      - run: git config --global user.email "noreply@github.com"
+      - run: git config --global user.name "GitHub"
+      - run: git checkout -b dist
+      - run: git add .
+      - run: git commit -m "Update build"
+      - run: git rebase --root
+      - run: git push origin dist --force
