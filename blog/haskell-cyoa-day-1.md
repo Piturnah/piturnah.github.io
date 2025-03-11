@@ -1,3 +1,9 @@
+---
+mastohost: hachyderm.io
+mastouser: piturnah
+mastotoot: 113454204285111953
+---
+
 # Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell
 
 -# 2024-11-09 #-

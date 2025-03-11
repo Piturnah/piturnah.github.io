@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/blog.css">
 
+  $if(blog)$
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
@@ -22,18 +23,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="module" src="https://cdn.jsdelivr.net/gh/dpecos/mastodon-comments@6fe36e7e308412cc02f26ae1477987a75d32e58f/mastodon-comments.js"></script>
+  $endif$
 </head>
 
 <body>
-  <#header />
+  $partial("_templates/nav.html")$
 
   <div class="main-content">
     <div class="box">
-      <{content} />
+      $body$
     </div>
-
-    <mastodon-comments host="{{mastohost}}" user="{{mastouser}}" tootId="{{mastotoot}}"></mastodon-comments>
+    
+    $if(mastohost)$
+    <mastodon-comments host=$mastohost$ user=$mastouser$ tootId=$mastotoot$></mastodon-comments>
+    $endif$
   </div>
 </body>
-
 </html>
