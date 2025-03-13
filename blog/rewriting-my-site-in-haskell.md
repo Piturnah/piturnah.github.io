@@ -1,3 +1,9 @@
+---
+mastohost: mathstodon.xyz
+mastouser: piturnah
+mastotoot: 114152300811331994
+---
+
 # Rewriting my site in Haskell (using hakyll)
 
 -# 2025-03-13 #-
