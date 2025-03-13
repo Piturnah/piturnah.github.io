@@ -55,6 +55,7 @@ html {
 
 @media screen and (max-width: 1024px) {
     html { font-size: 12px; }
+    .show-big { display: none; }
 }
 
 @media screen and (max-width: 768px) {

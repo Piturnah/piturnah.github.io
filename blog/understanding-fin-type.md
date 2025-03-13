@@ -2,6 +2,10 @@
 mastohost: mathstodon.xyz
 mastouser: piturnah
 mastotoot: 114043988403621322
+
+title: Understanding the Fin type
+published: 2025-02-21
+description: Wrapping our heads around why the common `Fin` type actually does what it says.
 ---
 
 **Edit** 2025-02-22: I realised there is a much simpler proof which is also more intuitive. I sketched it in the comments. Will update post when I have time.

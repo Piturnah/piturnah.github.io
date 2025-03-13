@@ -2,6 +2,10 @@
 mastohost: mathstodon.xyz
 mastouser: piturnah
 mastotoot: 114152300811331994
+
+title: Rewriting my site in Haskell (using hakyll)
+published: 2025-03-13
+description: I rewrote this website in Haskell.
 ---
 
 # Rewriting my site in Haskell (using hakyll)
@@ -204,6 +208,31 @@ main = hakyll $ do
 I'm looking forward to leveraging it to do more cool stuff, like add an Atom feed for this blog.
 
 I hope you enjoyed reading. If you did, feel free to leave a comment. If you didn't, also leave a comment! Bye for now.
+
+## Bonus: Atom feed
+
+**Edit**: I implemented the atom feed. It was so simple that I had to come back and show it. This is literally all it required:
+
+```hs
+main :: IO ()
+main = hakyll $ do
+    -- ...
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $
+            loadAll "blog/*"
+                >>= recentFirst
+                >>= renderAtom
+                    FeedConfiguration
+                        { feedTitle = "piturnah.xyz"
+                        , feedDescription = "Pit's blog"
+                        , feedAuthorName = "Peter Hebden"
+                        , feedAuthorEmail = ""
+                        , feedRoot = "https://piturnah.xyz"
+                        }
+                    defaultContext
+    -- ...
+```
 
 [^1]: Still using GitHub? [Give it up](https://sfconservancy.org/GiveUpGitHub/) today.
 [^2]: Those of you who know me even slightly may find this fact hilariously incongruent.

@@ -4,8 +4,8 @@ import Hakyll
 import System.FilePath
 import Text.Pandoc.Options
 
-emptyField :: String -> Context String
-emptyField name = field name (const . pure $ "")
+emptyField :: String -> Context a
+emptyField name = boolField name $ const True
 
 mdRoute :: Routes
 mdRoute = customRoute $ (</> "index.html") . dropExtension . toFilePath
@@ -34,9 +34,25 @@ main = hakyll $ do
             pandocCompilerWith
                 defaultHakyllReaderOptions
                 defaultHakyllWriterOptions{writerHTMLMathMethod = MathJax ""}
+                >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate
                     "_templates/default.html"
                     (defaultContext <> emptyField "blog")
+
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $
+            loadAll "blog/*"
+                >>= recentFirst
+                >>= renderAtom
+                    FeedConfiguration
+                        { feedTitle = "piturnah.xyz"
+                        , feedDescription = "Pit's blog"
+                        , feedAuthorName = "Peter Hebden"
+                        , feedAuthorEmail = ""
+                        , feedRoot = "https://piturnah.xyz"
+                        }
+                    defaultContext
 
     match "**.md" $ route mdRoute >> compileWith pandocCompiler
     match "**.html" $ route idRoute >> compileWith getResourceBody

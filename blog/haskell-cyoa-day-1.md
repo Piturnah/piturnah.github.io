@@ -2,6 +2,10 @@
 mastohost: hachyderm.io
 mastouser: piturnah
 mastotoot: 113454204285111953
+
+title: Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell
+published: 2024-11-09
+description: An introductory tutorial for Haskell programming.
 ---
 
 # Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell
