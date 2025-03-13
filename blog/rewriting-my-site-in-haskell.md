@@ -105,7 +105,7 @@ compileWith compiler = compile $ do
 
 Compilation is done in a certain `Context` ([docs](https://hackage.haskell.org/package/hakyll-4.16.6.0/docs/Hakyll-Web-Template-Context.html)), which basically consists of a bunch of key-value pairs. It's implemented as a `Monoid` so it's super convenient to work with.
 
-One of the places you can access the values from the context is in templating. I will showcase a place I have used this on the site: the blog! My blog layout is very similar to my default layout ([example](/reading-list)), but with extra stuff such as the [Mastodon comments](https://github.com/dpecos/mastodon-comments) section. The context system allows me to use the same template for both, where for example I can specify that I want to include certain header stuff only when the `"blog"` key is present:
+One of the places you can access the values from the context is in templating. I will showcase a place I have used this on the site: the blog! My blog layout is very similar to my default layout ([example](/faq)), but with extra stuff such as the [Mastodon comments](https://github.com/dpecos/mastodon-comments) section. The context system allows me to use the same template for both, where for example I can specify that I want to include certain header stuff only when the `"blog"` key is present:
 
 ```html
 <head>
