@@ -20,7 +20,7 @@ All this led to me eventually writing my own site generator: [Shovel](https://co
 
 Eventually I made a great realisation. *I* know how I want to transform the documents in my site's build process and I just need a convenient tool to express that. We already have such tools: programming languages. We already have high-level programming languages which are turing complete. The perfect site generator isn't some CLI tool with a restrictive framework and mountains of awkward configuration, it's just a library in an ergonomic high-level language. [My friend Abi](https://www.akpain.net/) already understood this; her site being built by a bespoke Python script.
 
-I made posted a toot about this thought and within minutes I got [a reply](https://mathstodon.xyz/@jj@types.pl/114141092743989492) recommending that I check out Hakyll. Hakyll immediately seemed like what I was looking for. I could have pivoted Shovel into being a more bespooke thing more explicitly just for my site, but the problem with Rust is that it *sucks* if you don't need the low-level access and speed. Haskell, on the other hand, is a beautifully ergonomic language which is a joy to write for those tasks where you don't need Rust's main offerings.
+I posted a toot about this thought and within minutes I got [a reply](https://mathstodon.xyz/@jj@types.pl/114141092743989492) recommending that I check out Hakyll. Hakyll immediately seemed like what I was looking for. I could have pivoted Shovel into being a more bespoke thing more explicitly just for my site, but the problem with Rust is that it *sucks* if you don't need the low-level access and speed. Haskell, on the other hand, is a beautifully ergonomic language which is a joy to write for those tasks where you don't need Rust's main offerings.
 
 ## How?
 
@@ -40,12 +40,7 @@ where `mdRoute` and `compileWith` are also defined by me, not as part of the lib
 
 ```haskell
 mdRoute :: Routes
-mdRoute = customRoute $ mdRoute' . toFilePath
-  where
-    mdRoute' :: FilePath -> FilePath
-    mdRoute' path =
-        let (dir, name) = splitFileName . dropExtension $ path
-         in dir </> name </> "index.html"
+mdRoute = customRoute $ (</> "index.html") . dropExtension . toFilePath
 ```
 
 For comparison, here was the corresponding Rust code from Shovel:
@@ -105,8 +100,8 @@ One of the places you can access the values from the context is in templating. I
 ```html
 <head>
 $if(blog)$
-  <script 
-    type="module" 
+  <script
+    type="module"
     src="https://cdn.jsdelivr.net/gh/dpecos/mastodon-comments@6fe36e7e308412cc02f26ae1477987a75d32e58f/mastodon-comments.js"
   />
 $endif$
@@ -144,7 +139,7 @@ main = hakyll $ do
     -- ...
 ```
 
-what I'm doing here is basically compiling `_templates/index.html` as a template, and then creating a new empty item called "index.html" which is not associated to any file and rendering it into the aforementioned template. This isn't the endof the world, and, the biggest benefit of using Hakyll is that we're working in a turing-complete high-level language. I can just make a special extension for files I want to render this way, and do it automatically. For now I only need it for the root, and so this solution is fine.
+what I'm doing here is basically compiling `_templates/index.html` as a template, and then creating a new empty item called "index.html" which is not associated to any file and rendering it into the aforementioned template. This isn't the end of the world, and, the biggest benefit of using Hakyll is that we're working in a turing-complete high-level language. I can just make a special extension for files I want to render this way, and write some code to handle them this way automatically. For now I only need it for the root, and so this solution is fine.
 
 Still, it seems a little weird that this apparently basic want is not included in the library. Maybe it is, and I just couldn't find it?
 
@@ -165,12 +160,7 @@ emptyField :: String -> Context String
 emptyField name = field name (const . pure $ "")
 
 mdRoute :: Routes
-mdRoute = customRoute $ mdRoute' . toFilePath
-  where
-    mdRoute' :: FilePath -> FilePath
-    mdRoute' path =
-        let (dir, name) = splitFileName . dropExtension $ path
-         in dir </> name </> "index.html"
+mdRoute = customRoute $ (</> "index.html") . dropExtension . toFilePath
 
 compileWith :: Compiler (Item String) -> Rules ()
 compileWith compiler = compile $ do
@@ -209,6 +199,6 @@ I'm looking forward to leveraging it to do more cool stuff, like add an Atom fee
 
 I hope you enjoyed reading. If you did, feel free to leave a comment. If you didn't, also leave a comment! Bye for now.
 
-[^1]: Still using GitHub? [Give up](https://sfconservancy.org/GiveUpGitHub/) today.
+[^1]: Still using GitHub? [Give it up](https://sfconservancy.org/GiveUpGitHub/) today.
 [^2]: Those of you who know me even slightly may find this fact hilariously incongruent.
 [^3]: There are some nightly-only features which do make it a *little* better.

@@ -8,12 +8,7 @@ emptyField :: String -> Context String
 emptyField name = field name (const . pure $ "")
 
 mdRoute :: Routes
-mdRoute = customRoute $ mdRoute' . toFilePath
-  where
-    mdRoute' :: FilePath -> FilePath
-    mdRoute' path =
-        let (dir, name) = splitFileName . dropExtension $ path
-         in dir </> name </> "index.html"
+mdRoute = customRoute $ (</> "index.html") . dropExtension . toFilePath
 
 compileWith :: Compiler (Item String) -> Rules ()
 compileWith compiler = compile $ do
