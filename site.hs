@@ -7,6 +7,9 @@ import Text.Pandoc.Options
 emptyField :: String -> Context a
 emptyField name = boolField name $ const True
 
+stringField :: String -> (Item a -> String) -> Context a
+stringField name f = field name $ pure . f
+
 emptyItem :: Identifier -> Item String
 emptyItem = flip Item ""
 
@@ -66,13 +69,12 @@ main = hakyll $ do
             let lastPost = last posts
             let postCtx =
                     defaultContext
-                        <> field
+                        <> stringField
                             "bullet"
                             ( \item ->
-                                pure $
-                                    if itemBody item == itemBody lastPost
-                                        then "&#x2514;&#x2500;"
-                                        else "&#x251c;&#x2500;"
+                                if itemBody item == itemBody lastPost
+                                    then "&#x2514;&#x2500;"
+                                    else "&#x251c;&#x2500;"
                             )
             loadAndApplyTemplate
                 "_templates/blog.html"
