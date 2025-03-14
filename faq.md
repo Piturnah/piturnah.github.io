@@ -1,10 +1,10 @@
 # FAQ
 
-(last updated 2025-03-13)
+(last updated 2025-03-14)
 
 ## What does "Piturnah" mean?
 
-Piturnah is the name I've been using online since around 2014, after I came up with it as a name for my character in one of the only [D&D](https://en.wikipedia.org/wiki/Dungeons_%26_Dragons) sessions I've ever participated in. *pitur* is a bastardisation of my first name (Peter) *na* is the first two letters of my middle name, and *h* is the initial of my last name.
+Piturnah is the name I've been using online since around 2014, after I came up with it as a name for my character in one of the only [D&D](https://en.wikipedia.org/wiki/Dungeons_%26_Dragons) sessions I've ever participated in. *pitur* is a bastardisation of my first name (Peter), *na* is the first two letters of my middle name, and *h* is the initial of my last name.
 
 ## What's the font?
 
