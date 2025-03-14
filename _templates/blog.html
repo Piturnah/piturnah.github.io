@@ -1,0 +1,9 @@
+<!-- Partial for the blog list -->
+<div class="plain">
+    <ul class="plain-list">
+    <li>Blog archive</li>
+    $for(posts)$
+      <li>$bullet$ [$published$] <a href="$url$">$title$</a></li>
+    $endfor$
+    </ul>
+</div>

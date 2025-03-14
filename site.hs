@@ -7,6 +7,9 @@ import Text.Pandoc.Options
 emptyField :: String -> Context a
 emptyField name = boolField name $ const True
 
+emptyItem :: Identifier -> Item String
+emptyItem = flip Item ""
+
 mdRoute :: Routes
 mdRoute = customRoute $ (</> "index.html") . dropExtension . toFilePath
 
@@ -26,7 +29,7 @@ main = hakyll $ do
     create ["index.html"] $ do
         route idRoute
         compile . loadAndApplyTemplate "_templates/index.html" defaultContext $
-            Item "index.html" ""
+            emptyItem "index.html"
 
     match "blog/**.md" $ do
         route mdRoute
@@ -42,7 +45,7 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $
-            loadAll "blog/*"
+            loadAll ("blog/*" .&&. complement "blog/index.html")
                 >>= recentFirst
                 >>= renderAtom
                     FeedConfiguration
@@ -52,6 +55,31 @@ main = hakyll $ do
                         , feedAuthorEmail = ""
                         , feedRoot = "https://piturnah.xyz"
                         }
+                    defaultContext
+
+    create ["blog/index.html"] $ do
+        route idRoute
+        compile $ do
+            posts <-
+                recentFirst
+                    =<< loadAll ("blog/*" .&&. complement "blog/index.html")
+            let lastPost = last posts
+            let postCtx =
+                    defaultContext
+                        <> field
+                            "bullet"
+                            ( \item ->
+                                pure $
+                                    if itemBody item == itemBody lastPost
+                                        then "&#x2514;&#x2500;"
+                                        else "&#x251c;&#x2500;"
+                            )
+            loadAndApplyTemplate
+                "_templates/blog.html"
+                (listField "posts" postCtx $ pure posts)
+                (emptyItem "blog/index.html")
+                >>= loadAndApplyTemplate
+                    "_templates/default.html"
                     defaultContext
 
     match "**.md" $ route mdRoute >> compileWith pandocCompiler

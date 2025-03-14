@@ -92,3 +92,16 @@ mastodon-comments {
 .mastodon-comment .status .replies a:hover { color: #9e86c8 !important; }
 .mastodon-comment .status .reblogs a:hover { color: #a6e22e !important; }
 .mastodon-comment .status .favourites a:hover { color: #e87d3e !important; }
+
+.plain {
+    font-family: "iosevka-slab";
+}
+
+.plain-list {
+    list-style-type: none;
+}
+
+.plain-list li {
+    color: #E6DB74;
+    list-style-type: none;
+}
