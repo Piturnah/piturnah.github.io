@@ -1,4 +1,8 @@
 ---
+mastohost: mathstodon.xyz
+mastouser: piturnah
+mastotoot: 114162019239955994
+
 title: The Unreasonable Effectfulness of Haskell
 published: 2025-03-14
 description: Haskell is effectful.
@@ -14,7 +18,7 @@ And from this you may walk away thinking something like
 
 > What? These programming languages are clearly useless. How can I write code without I/O or even control flow?
 
-But we've missed something. Haskell is just as effectful as any other programming language. We are claiming an omission of *side*-effects, not of effects in general.
+But we've missed something. Haskell is just as effectful as any other programming language. We are claiming an omission of *side*-effects, not of effects in general. You can [fire the missiles](https://www.youtube.com/watch?v=iSmkqocn0oQ&t=130) after all.
 
 ## When is an effect not a side-effect?
 
