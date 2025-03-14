@@ -84,6 +84,13 @@ main = hakyll $ do
                     "_templates/default.html"
                     defaultContext
 
+    match "site.hs" $ do
+        route (constRoute "site.hs/index.html")
+        compile $
+            getResourceBody
+                >>= applyTemplate "<pre>$body$</pre>" defaultContext
+                    . fmap escapeHtml
+
     match "**.md" $ route mdRoute >> compileWith pandocCompiler
     match "**.html" $ route idRoute >> compileWith getResourceBody
     match "**" $ route idRoute >> compile copyFileCompiler
