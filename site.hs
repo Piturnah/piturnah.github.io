@@ -25,14 +25,33 @@ compileWith compiler = compile $ do
         Just path -> loadAndApplyTemplate (fromFilePath path) defaultContext
         Nothing -> loadAndApplyTemplate "_templates/default.html" defaultContext
 
+loadPosts :: Compiler ([Item String], Context String)
+loadPosts = do
+    posts <-
+        recentFirst =<< loadAll ("blog/*" .&&. complement "blog/index.html")
+    let lastPost = last posts
+    let postCtx =
+            mapContextBy (== "url") dropFileName defaultContext
+                <> stringField
+                    "bullet"
+                    ( \item ->
+                        if itemBody item == itemBody lastPost
+                            then "&#x2514;&#x2500;"
+                            else "&#x251c;&#x2500;"
+                    )
+    pure (posts, postCtx)
+
 main :: IO ()
 main = hakyll $ do
     match "_templates/*" . compile $ templateCompiler
 
     create ["index.html"] $ do
         route idRoute
-        compile . loadAndApplyTemplate "_templates/index.html" defaultContext $
-            emptyItem "index.html"
+        compile $ do
+            (posts, postCtx) <- loadPosts
+            let ctx = defaultContext <> listField "posts" postCtx (pure posts)
+            loadAndApplyTemplate "_templates/index.html" ctx $
+                emptyItem "index.html"
 
     match "blog/**.md" $ do
         route mdRoute
@@ -63,19 +82,7 @@ main = hakyll $ do
     create ["blog/index.html"] $ do
         route idRoute
         compile $ do
-            posts <-
-                recentFirst
-                    =<< loadAll ("blog/*" .&&. complement "blog/index.html")
-            let lastPost = last posts
-            let postCtx =
-                    defaultContext
-                        <> stringField
-                            "bullet"
-                            ( \item ->
-                                if itemBody item == itemBody lastPost
-                                    then "&#x2514;&#x2500;"
-                                    else "&#x251c;&#x2500;"
-                            )
+            (posts, postCtx) <- loadPosts
             loadAndApplyTemplate
                 "_templates/blog.html"
                 (listField "posts" postCtx $ pure posts)

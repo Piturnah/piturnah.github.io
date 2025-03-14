@@ -3,14 +3,10 @@ mastohost: mathstodon.xyz
 mastouser: piturnah
 mastotoot: 114152300811331994
 
-title: Rewriting my site in Haskell (using hakyll)
+title: Rewriting my site in Haskell (using Hakyll)
 published: 2025-03-13
 description: I rewrote this website in Haskell.
 ---
-
-# Rewriting my site in Haskell (using hakyll)
-
--# 2025-03-13 #-
 
 The other day I spent a couple of hours learning about, and rewriting this website in, [Hakyll](https://jaspervdj.be/hakyll/) --- a site generator library for Haskell. In this post my plan is to write a little about why I did this and what the process was like, and whether it may be a good idea for your site, too!
 

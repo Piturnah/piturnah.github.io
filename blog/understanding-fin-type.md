@@ -6,13 +6,9 @@ mastotoot: 114043988403621322
 title: Understanding the Fin type
 published: 2025-02-21
 description: Wrapping our heads around why the common `Fin` type actually does what it says.
+
+pre-note: "<b>Edit</b> 2025-02-22: I realised there is a much simpler proof which is also more intuitive. I sketched it in the comments. Will update post when I have time."
 ---
-
-**Edit** 2025-02-22: I realised there is a much simpler proof which is also more intuitive. I sketched it in the comments. Will update post when I have time.
-
-# Understanding the Fin type
-
--# 2025-02-21 #-
 
 I have been taking an interest in Edwin Brady's [Idris](https://www.idris-lang.org/) lately, and was reading its introductory documentation when I suddenly came face-to-face with the following data definition.
 
