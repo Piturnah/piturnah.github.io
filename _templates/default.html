@@ -5,7 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="/images/icon.png">
-  <title>Piturnah.xyz</title>
+  $if(title)$
+    <title>Piturnah.xyz | $title$</title>
+  $else$
+    <title>Piturnah.xyz</title>
+  $endif$
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/blog.css">
 
