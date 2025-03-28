@@ -5,6 +5,7 @@ I'm (currently) not linking to this from anywhere, so if you've found it, congra
 ## Papers
 
 - F. Lawvere 1966. *The category of categories as a foundation for mathematics.*
+- S. Staton and P. B. Levy 2013. *Universal properties for impure programming languages.*
 
 ## Blog Posts
 
