@@ -1,5 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+import Control.Monad (filterM)
+import Data.Maybe (isNothing)
 import Hakyll
 import System.FilePath
 import Text.Pandoc.Options
@@ -25,10 +27,16 @@ compileWith compiler = compile $ do
         Just path -> loadAndApplyTemplate (fromFilePath path) defaultContext
         Nothing -> loadAndApplyTemplate "_templates/default.html" defaultContext
 
+filterUnlisted :: (MonadMetadata m) => [Item String] -> m [Item String]
+filterUnlisted = filterM $ \item ->
+    isNothing <$> getMetadataField (itemIdentifier item) "unlisted"
+
 loadPosts :: Compiler ([Item String], Context String)
 loadPosts = do
     posts <-
-        recentFirst =<< loadAll ("blog/*" .&&. complement "blog/index.html")
+        recentFirst
+            =<< filterUnlisted
+            =<< loadAll ("blog/*" .&&. complement "blog/index.html")
     let lastPost = last posts
     let postCtx =
             mapContextBy (== "url") dropFileName defaultContext
@@ -68,6 +76,7 @@ main = hakyll $ do
         route idRoute
         compile $
             loadAll ("blog/*" .&&. complement "blog/index.html")
+                >>= filterUnlisted
                 >>= recentFirst
                 >>= renderAtom
                     FeedConfiguration

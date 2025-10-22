@@ -37,6 +37,9 @@
 
   <div class="main-content">
     <div class="box">
+      $if(unlisted)$
+      <h3 style="color: #F92672">[UNLISTED]</h3>
+      $endif$
       $if(pre-note)$
         <p>$pre-note$</p>
       $endif$
