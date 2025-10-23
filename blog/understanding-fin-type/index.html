@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/icon.png">
+  
+    <title>Piturnah.xyz | Understanding the Fin type</title>
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+
+  <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- and it's easy to individually load additional languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
+
+  <script>hljs.highlightAll();</script>
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="module" src="https://cdn.jsdelivr.net/gh/dpecos/mastodon-comments@6fe36e7e308412cc02f26ae1477987a75d32e58f/mastodon-comments.js"></script>
+  
+</head>
+
+<body>
+  <header>
+    <script src="/assets/header-scroll.js"></script>
+    <a href="/" class="home-button">piturnah<span class="domain">.xyz</span></a>
+    <nav>
+        <ul>
+            <li><a href="https://ko-fi.com/piturnah">Ko-fi</a></li>
+            <li><a href="https://codeberg.org/Piturnah">Codeberg</a></li>
+            <li><a href="https://hachyderm.io/@piturnah">Mastodon</a></li>
+            <li>
+                <a href="https://github.com/Piturnah/piturnah.github.io">
+                    <svg
+                      viewBox="0 0 98 96"
+                      width="32"
+                      height="34"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+  <div class="main-content">
+    <div class="box">
+      
+      
+        <p><b>Edit</b> 2025-02-22: I realised there is a much simpler proof which is also more intuitive. I sketched it in the comments. Will update post when I have time.</p>
+      
+      
+        <h1>Understanding the Fin type</h1>
+        <p>-# 2025-02-21 #-</p>
+      
+      <p>I have been taking an interest in Edwin Brady’s <a href="https://www.idris-lang.org/">Idris</a> lately, and was reading its introductory documentation when I suddenly came face-to-face with the following data definition.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Fin</span> <span class="op">:</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Type</span> <span class="kw">where</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">FZ</span> <span class="op">:</span> <span class="dt">Fin</span> (<span class="dt">S</span> k)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">FS</span> <span class="op">:</span> <span class="dt">Fin</span> k <span class="ot">-&gt;</span> <span class="dt">Fin</span> (<span class="dt">S</span> k)</span></code></pre></div>
+<p>The <code>Fin</code> type. I had seen this type before on my university’s Agda module, which I am currently an undergraduate TA for. In Agda, it looked like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Fin</span> <span class="op">:</span> ℕ → <span class="dt">Type</span> <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> zero <span class="op">:</span> {n <span class="op">:</span> ℕ} → <span class="dt">Fin</span> (suc n)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a> suc  <span class="op">:</span> {n <span class="op">:</span> ℕ} → <span class="dt">Fin</span> n → <span class="dt">Fin</span> (suc n)</span></code></pre></div>
+<p>I never quite understood this type when I was taking the module. Actually, the second test happened to rely quite heavily on it, and my grade suffered as a result. So when I saw it as one of the <em>very first</em> examples of a dependent type in the Idris documentation, I was once again left feeling a bit stumped and a bit stupid. I had no problem with the rest of the module, so why couldn’t I understand this one type which was apparently so simple it should be an introductory example?</p>
+<p>What confused me so much was not <em>what</em> it was, but <em>how</em> it was. We are told <code>Fin n</code> is just a type with exactly <code>n</code> elements<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, but do we believe that?</p>
+<h2 id="what-elements-are-we-actually-dealing-with">What elements are we actually dealing with?</h2>
+<p>We can answer this question by examining each constructor in turn, where I will bring back the implicit <code>∀</code> as I believe it makes the understanding a lot easier. I’m going to be going back and forth between reasoning in <span class="math inline">\(\mathbf{Set}\)</span> and <span class="math inline">\(\mathbf{Type}\)</span> depending on what feels the most natural. Also, we take <span class="math inline">\(0 \in \mathbb{N}\)</span> as convention.</p>
+<h3 id="rule-1">Rule 1</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FZ</span> <span class="op">:</span> ∀ k <span class="op">.</span> <span class="dt">Fin</span> (<span class="dt">S</span> k)</span></code></pre></div>
+<p>This tells us that <code>FZ</code> is an element of every <code>Fin n</code> where <code>n != Z</code>. I.e., <span class="math display">\[\forall k \in \mathbb{N},\; \text{FZ} \in \text{Fin } (k + 1).\]</span></p>
+<h3 id="rule-2">Rule 2</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FS</span> <span class="op">:</span> ∀ k <span class="op">.</span> <span class="dt">Fin</span> k <span class="ot">-&gt;</span> <span class="dt">Fin</span> (<span class="dt">S</span> k)</span></code></pre></div>
+<p>This tells us that whenever we have an element <code>a</code> of type <code>Fin k</code>, we have an element of type <code>Fin (k + 1)</code>, namely <code>FS a</code>. I.e.,
+<span class="math display">\[\forall k \in \mathbb{N},\; a \in \text{Fin } k \implies \text{FS}\, a \in \text{Fin } (k + 1).\]</span> Starting with <span class="math inline">\(\text{FZ} \in \text{Fin} \, (k + 1)\)</span>, we can follow this chain to see that
+<span class="math display">\[\begin{aligned} \text{FZ} &amp;\in \text{Fin } (k + 1) \\\implies\text{FS FZ} &amp;\in \text{Fin } (k + 2) \\\implies (\text{FS} \circ \text{FS})\, \text{FZ} &amp;\in \text{Fin } (k + 3) \\\implies (\text{FS} \circ \text{FS} \circ \text{FS})\, \text{FZ} &amp;\in \text{Fin } (k + 4) \\ &amp;\vdots \\\implies \underset{n \text{ times}}{\left(\text{FS} \circ \cdots \circ \text{FS}\right)}\, \text{FZ} &amp;\in \text{Fin } (k + n + 1)\end{aligned}\]</span> for all <span class="math inline">\(n,\, k \in \mathbb{N}\)</span>.</p>
+<h2 id="seems-pretty-natural">Seems pretty natural</h2>
+<p>There is a kind of obvious analogy with these constructors and those given for the type <code>Nat</code>. Namely, we had that every element of type <code>Fin k</code> takes the form
+<span class="math display">\[\underset{n \text{ times}}{\left(\text{FS} \circ \cdots \circ \text{FS}\right)}\, \text{FZ}\]</span> for some <span class="math inline">\(n \in \mathbb{N}\)</span>, and we see similarly that every element of type <code>Nat</code> takes the form
+<span class="math display">\[\underset{n \text{ times}}{\left(\text{S} \circ \cdots \circ \text{S}\right)}\, \text{Z}\]</span> for some <span class="math inline">\(n \in \mathbb{N}\)</span>,
+and we can use this to define the following function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>finToNat <span class="op">:</span> <span class="dt">Fin</span> n <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>finToNat <span class="dt">FZ</span>     <span class="ot">=</span> <span class="dt">Z</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>finToNat (<span class="dt">FS</span> k) <span class="ot">=</span> <span class="dt">S</span> (finToNat k)</span></code></pre></div>
+<p>This function is obviously injective, so we have an upper bound for the size of our <code>Fin</code> type (namely, it is at most countably infinite…). What I claim is that this function is also surjective, when we restrict the codomain to exactly <span class="math inline">\(\mathbb{N}_{&lt;n}\)</span>. If this were true, we’d have our desired result that <span class="math inline">\(\left|\text{Fin}\,n\right| = n\)</span>, and the convenient isomorphism <span class="math inline">\(\text{Fin}\,n \cong \{0,1,2,\ldots,n-1\}\)</span>!</p>
+<p>Consider <span class="math inline">\(m = \underset{m \text{ times}}{\left(\text{S} \circ \cdots \circ \text{S}\right)}\, \text{Z} \in \mathbb{N}_{&lt;n}\)</span>. Then clearly <span class="math display">\[a := \underset{m \text{ times}}{\left(\text{FS} \circ \cdots \circ \text{FS}\right)}\, \text{FZ}\]</span> is mapped to <span class="math inline">\(m\)</span> by <code>finToNat</code>, so all we need to show is that <span class="math inline">\(a \in \text{Fin}\,n\)</span>.</p>
+<p>We can directly apply our result from the last section to show that for all <span class="math inline">\(k \in \mathbb{N}\)</span>,
+<span class="math display">\[a = \underset{m \text{ times}}{\left(\text{FS} \circ \cdots \circ \text{FS}\right)}\, \text{FZ} \in \text{Fin} (k + m + 1),\]</span> so this is equivalent to finding some <span class="math inline">\(k \in \mathbb{N}\)</span> such that <span class="math inline">\(k + m + 1 = n\)</span>. In other words, we need <span class="math display">\[\mathbb{N} \ni k = n - m -1.\]</span>
+But <span class="math inline">\(m &lt; n\)</span> by assumption, as <span class="math inline">\(m \in \mathbb{N}_{&lt;n}\)</span>. So
+<span class="math display">\[\begin{aligned}&amp;n - m \geq 1\\\therefore\quad &amp; n - m - 1 \in \mathbb{N},\end{aligned}\]</span> but <span class="math inline">\(m \in \mathbb{N}_{&lt;n}\)</span> was chosen arbitrarily, and so we’re done.</p>
+<h2 id="the-end">The end</h2>
+<p>In the end, it wasn’t that complicated. So why was this type so confusing, at least for me? In hindsight, Perhaps it was because of the overloading of the natural number data constructors in Agda, or maybe something else entirely. Aside from that, as a <a href="https://anna-maths.xyz/">friend of mine</a> put it:</p>
+<blockquote>
+<p>It’s not the most intuitive thing because you aren’t [directly] defining the elements of one set, but defining which sets each possible element belongs to[.]</p>
+</blockquote>
+<p>I hope you found this post useful. If you did, you can let me know by leaving a comment via fedi (link below). If you thought it was terrible, or have constructive feedback, then you can also let me know in the same place! I’m sure I’ve made a mistake somewhere or missed something completely obvious.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Specifically with <span class="math inline">\(n \leq n&#39; \iff \text{Fin } n \subseteq \text{Fin } n&#39;\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    </div>
+
+    
+    <mastodon-comments host=mathstodon.xyz user=piturnah tootId=114043988403621322></mastodon-comments>
+    
+  </div>
+</body>
+</html>

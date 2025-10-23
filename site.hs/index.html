@@ -1,0 +1,113 @@
+<pre>{-# LANGUAGE OverloadedStrings #-}
+
+import Control.Monad (filterM)
+import Data.Maybe (isNothing)
+import Hakyll
+import System.FilePath
+import Text.Pandoc.Options
+
+emptyField :: String -&gt; Context a
+emptyField name = boolField name $ const True
+
+stringField :: String -&gt; (Item a -&gt; String) -&gt; Context a
+stringField name f = field name $ pure . f
+
+emptyItem :: Identifier -&gt; Item String
+emptyItem = flip Item &quot;&quot;
+
+mdRoute :: Routes
+mdRoute = customRoute $ (&lt;/&gt; &quot;index.html&quot;) . dropExtension . toFilePath
+
+compileWith :: Compiler (Item String) -&gt; Rules ()
+compileWith compiler = compile $ do
+    identifier &lt;- getUnderlying
+    layout &lt;- getMetadataField identifier &quot;layout&quot;
+    compiler &gt;&gt;= case layout of
+        Just &quot;none&quot; -&gt; pure
+        Just path -&gt; loadAndApplyTemplate (fromFilePath path) defaultContext
+        Nothing -&gt; loadAndApplyTemplate &quot;_templates/default.html&quot; defaultContext
+
+filterUnlisted :: (MonadMetadata m) =&gt; [Item String] -&gt; m [Item String]
+filterUnlisted = filterM $ \item -&gt;
+    isNothing &lt;$&gt; getMetadataField (itemIdentifier item) &quot;unlisted&quot;
+
+loadPosts :: Compiler ([Item String], Context String)
+loadPosts = do
+    posts &lt;-
+        recentFirst
+            =&lt;&lt; filterUnlisted
+            =&lt;&lt; loadAll (&quot;blog/*&quot; .&amp;&amp;. complement &quot;blog/index.html&quot;)
+    let lastPost = last posts
+    let postCtx =
+            mapContextBy (== &quot;url&quot;) dropFileName defaultContext
+                &lt;&gt; stringField
+                    &quot;bullet&quot;
+                    ( \item -&gt;
+                        if itemBody item == itemBody lastPost
+                            then &quot;&amp;#x2514;&amp;#x2500;&quot;
+                            else &quot;&amp;#x251c;&amp;#x2500;&quot;
+                    )
+    pure (posts, postCtx)
+
+main :: IO ()
+main = hakyll $ do
+    match &quot;_templates/*&quot; . compile $ templateCompiler
+
+    create [&quot;index.html&quot;] $ do
+        route idRoute
+        compile $ do
+            (posts, postCtx) &lt;- loadPosts
+            let ctx = defaultContext &lt;&gt; listField &quot;posts&quot; postCtx (pure posts)
+            loadAndApplyTemplate &quot;_templates/index.html&quot; ctx $
+                emptyItem &quot;index.html&quot;
+
+    match &quot;blog/**.md&quot; $ do
+        route mdRoute
+        compile $
+            pandocCompilerWith
+                defaultHakyllReaderOptions
+                defaultHakyllWriterOptions{writerHTMLMathMethod = MathJax &quot;&quot;}
+                &gt;&gt;= saveSnapshot &quot;content&quot;
+                &gt;&gt;= loadAndApplyTemplate
+                    &quot;_templates/default.html&quot;
+                    (defaultContext &lt;&gt; emptyField &quot;blog&quot;)
+
+    create [&quot;atom.xml&quot;] $ do
+        route idRoute
+        compile $
+            loadAll (&quot;blog/*&quot; .&amp;&amp;. complement &quot;blog/index.html&quot;)
+                &gt;&gt;= filterUnlisted
+                &gt;&gt;= recentFirst
+                &gt;&gt;= renderAtom
+                    FeedConfiguration
+                        { feedTitle = &quot;piturnah.xyz&quot;
+                        , feedDescription = &quot;Pit&#39;s blog&quot;
+                        , feedAuthorName = &quot;Peter Hebden&quot;
+                        , feedAuthorEmail = &quot;&quot;
+                        , feedRoot = &quot;https://piturnah.xyz&quot;
+                        }
+                    defaultContext
+
+    create [&quot;blog/index.html&quot;] $ do
+        route idRoute
+        compile $ do
+            (posts, postCtx) &lt;- loadPosts
+            loadAndApplyTemplate
+                &quot;_templates/blog.html&quot;
+                (listField &quot;posts&quot; postCtx $ pure posts)
+                (emptyItem &quot;blog/index.html&quot;)
+                &gt;&gt;= loadAndApplyTemplate
+                    &quot;_templates/default.html&quot;
+                    defaultContext
+
+    match &quot;site.hs&quot; $ do
+        route (constRoute &quot;site.hs/index.html&quot;)
+        compile $
+            getResourceBody
+                &gt;&gt;= applyTemplate &quot;&lt;pre&gt;$body$&lt;/pre&gt;&quot; defaultContext
+                    . fmap escapeHtml
+
+    match &quot;**.md&quot; $ route mdRoute &gt;&gt; compileWith pandocCompiler
+    match &quot;**.html&quot; $ route idRoute &gt;&gt; compileWith getResourceBody
+    match &quot;**&quot; $ route idRoute &gt;&gt; compile copyFileCompiler
+</pre>

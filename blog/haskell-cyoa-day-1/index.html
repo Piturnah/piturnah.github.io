@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/icon.png">
+  
+    <title>Piturnah.xyz | Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell</title>
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+
+  <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- and it's easy to individually load additional languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
+
+  <script>hljs.highlightAll();</script>
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="module" src="https://cdn.jsdelivr.net/gh/dpecos/mastodon-comments@6fe36e7e308412cc02f26ae1477987a75d32e58f/mastodon-comments.js"></script>
+  
+</head>
+
+<body>
+  <header>
+    <script src="/assets/header-scroll.js"></script>
+    <a href="/" class="home-button">piturnah<span class="domain">.xyz</span></a>
+    <nav>
+        <ul>
+            <li><a href="https://ko-fi.com/piturnah">Ko-fi</a></li>
+            <li><a href="https://codeberg.org/Piturnah">Codeberg</a></li>
+            <li><a href="https://hachyderm.io/@piturnah">Mastodon</a></li>
+            <li>
+                <a href="https://github.com/Piturnah/piturnah.github.io">
+                    <svg
+                      viewBox="0 0 98 96"
+                      width="32"
+                      height="34"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+  <div class="main-content">
+    <div class="box">
+      
+      
+      
+        <h1>Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell</h1>
+        <p>-# 2024-11-09 #-</p>
+      
+      <p>I have been writing a lot of Haskell lately, and enjoying it a great deal. This has come to be due to my final year university project in <a href="https://en.wikipedia.org/wiki/Programming_language_theory">PL theory</a>. Haskell is a very versatile language with an extremely expressive type system that can be a joy to write, but beginners often struggle to get a foothold on it. Coming from the world of imperative languages, there’s a lot of new abstractions to become familiar with (such as the dreaded Monad), as we are ripped from our world of writing precedures to one where we must get by with function composition alone.</p>
+<p>I was chatting with a good friend of mine who is currently taking a one-semester module on functional programming using Haskell, and like many people is finding it hard to get anything to “click”.</p>
+<blockquote>
+<p>I think my issue is [that] unlike other languages where I could almost immediately see something I could make with it […] I just don’t see that in Haskell. Like I was trying to make cyoa games in Python from day 1.</p>
+</blockquote>
+<p>The person who said this is a very competent game developer who has been writing code for a long time and has experience in multiple languages. This stuck in my head, and I began considering how <em>I</em> might write a <a href="https://en.wikipedia.org/wiki/Choose_Your_Own_Adventure">CYOA</a> style game using only very simple Haskell, and I came to the conclusion that this is a very achievable goal.</p>
+<p>I empathise a lot with the position that Haskell is obscure for new users, and I thought that perhaps some people may benefit from seeing this simple example of a “real” program a beginner may come up with, using only the kind of Haskell you would see in the very first stages of learning the language.</p>
+<h2 id="modelling-our-game">Modelling our Game</h2>
+<p>In a choose-your-own-adventure game, the player must make a series of choices which come to form a story. We can model this quite simply as a kind of single-player turn-based game, where each turn is a choice the player must make. Then a choice consists of a prompt, and a list of options to pick from which will determine which choice we will present next.</p>
+<p>Haskell is a language of types and functions on types. When we go to model our game in Haskell, we have to translate each part of our model into one of those two things.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Choice</span> <span class="ot">=</span> <span class="dt">Choice</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  prompt ::</span> <span class="dt">String</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  opts ::</span> [(<span class="dt">String</span>, <span class="dt">Int</span>)]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ot">allChoices ::</span> [<span class="dt">Choice</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>allChoices <span class="ot">=</span> <span class="fu">undefined</span></span></code></pre></div>
+<p>Here we define the type of choices, with a single record constructor. A <code>Choice</code> has two fields. <code>prompt</code> is the text that will be shown to the player, and <code>opts</code> is a list of options that the player may take. Each option is a pair of a string (<em>the text to go along with the option</em>), and an <code>Int</code>, which will tell us the index into <code>allChoices</code> that leads to the corresponding choice.</p>
+<p>Let’s talk a bit about the data that falls under our <code>Choice</code> type. We gave one constructer, <code>Choice</code>, with two fields. Then to create a value of type <code>Choice</code>, we use the keyword <code>Choice</code> followed by the data of each field:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exampleChoice <span class="ot">=</span> <span class="dt">Choice</span> <span class="st">&quot;Here&#39;s the prompt.&quot;</span> [(<span class="st">&quot;Here&#39;s a list of one option.&quot;</span>, <span class="dv">0</span>)]</span></code></pre></div>
+<p>Haskell then automatically provides the following functions:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">prompt ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ot">opts ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> [(<span class="dt">String</span>, <span class="dt">Int</span>)]</span></code></pre></div>
+<p>We can use these functions to access our data.</p>
+<pre class="console"><code>ghci&gt; prompt exampleChoice
+&quot;Here&#39;s the prompt.&quot;</code></pre>
+<h2 id="the-event-loop">The Event Loop</h2>
+<p>A common paradigm for creating games is to run an event loop. In our case, every iteration of the loop should be a choice for the player to make.</p>
+<blockquote>
+<p><em>But wait!</em> I thought we couldn’t write loops in Haskell?</p>
+</blockquote>
+<p>I hear you, but the answer is simple: <em>recursion</em>. When we get to the end of the loop, we can just call it again. Haskell implements a common type of optimisation, called <a href="https://en.wikipedia.org/wiki/Tail_call">tail-call elimination</a>, to make this kind of thing efficient.</p>
+<p>Our loop will have the following type:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">loop ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span></code></pre></div>
+<p>As established, we are looking up choices by indexing into <code>allChoices</code>. Therefore, each iteration of the loop is passed an <code>Int</code> representing the index of the choice for that iteration. The return type of our loop is <code>IO ()</code>, which is Haskell’s <a href="https://www.haskell.org/tutorial/io.html">IO monad</a>. I already mentioned that monads are a stumbling block for new Haskellers, and this is the only one we will have to use.</p>
+<p>If you don’t know what a monad is yet, we can just think of our loop as returning an <em>IO action</em>. Monads are a powerful tool for working with <em>effectful computations</em> in a purely functional way. Haskell then provides us some lovely syntactic sugar so we can write our monadic function as though we were back in imperative land.</p>
+<p>Let’s write an initial implementation for our event loop, calling some functions along the way that we haven’t actually defined yet.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Given a choice, let&#39;s display the player&#39;s potential options.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>displayOptions <span class="ot">=</span> <span class="fu">undefined</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Given a choice &amp; an input string from the player, let&#39;s return the index of</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- the `Choice` corresponding to the option they took.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ot">determineNextChoice ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>determineNextChoice <span class="ot">=</span> <span class="fu">undefined</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ot">loop ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>loop idx <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- First, we use the provided index to lookup the choice.</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> choice <span class="ot">=</span> allChoices <span class="op">!!</span> idx</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- We can use the `putStrLn` function to display the prompt.</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> (prompt choice)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Next, let&#39;s use this undefined function to show the possible options.</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  displayOptions choice</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Thanks to IO-monad magic, we can get some input from the player.</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  input <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Onto the next iteration!</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  loop (determineNextChoice choice input)</span></code></pre></div>
+<h2 id="adding-some-choices">Adding Some Choices</h2>
+<p>Now that we’ve got the basic infrastructure set up, it’s time to think about what our adventure will be. Let’s get meta and write a CYOA game about creating a CYOA game.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>allChoices <span class="ot">=</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  [ <span class="dt">Choice</span> <span class="st">&quot;You have embarked on a journey to create a CYOA game. How will you start?&quot;</span> [(<span class="st">&quot;Choose a programming language&quot;</span>, <span class="dv">1</span>), (<span class="st">&quot;Give up and go home&quot;</span>, <span class="dv">2</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  , <span class="dt">Choice</span> <span class="st">&quot;There are many programming languages to pick from. Which will you choose?&quot;</span> [(<span class="st">&quot;Python&quot;</span>, <span class="dv">3</span>), (<span class="st">&quot;Haskell&quot;</span>, <span class="dv">2</span>)]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  , <span class="dt">Choice</span> <span class="st">&quot;Unfortunately, you failed. Maybe next time.&quot;</span> []</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  , <span class="dt">Choice</span> <span class="st">&quot;Congratulations! You&#39;ve made a Steam #1 bestseller!&quot;</span> []</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Now that we have populated `allChoices`, we can also define our entrypoint.</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> loop <span class="dv">0</span></span></code></pre></div>
+<p>Now all we have to do is implement our two undefined functions from earlier. We’ll start with <code>determineNextChoice</code> as it’s the easier of the two.</p>
+<p><code>determineNextChoice</code> takes a <code>Choice</code> and an input string and determines the global index of the choice corresponding to the option the player wants to take. In order for this to make sense, we have to define what kind of input we’re expecting.</p>
+<p>Let’s say the user will see something like this:</p>
+<pre class="console"><code>You have to pick from the following options.
+ (0) Option A
+ (1) Option B</code></pre>
+<p>This makes life easier for us as we can expect the user to input a number (0 or 1 in the above example) and we can use that for indexing. The prelude function <code>read :: Read a =&gt; String -&gt; a</code> can be used to parse a string into a type that is an instance of (that is, a type that <em>implements</em>) <code>Read</code>. We can use GHCi to check if we do have <code>Read</code>.</p>
+<pre class="console"><code>ghci&gt; :info Int
+instance Read Int -- Defined in ‘GHC.Read’</code></pre>
+<p>Great!</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">determineNextChoice ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>determineNextChoice choice input <span class="ot">=</span> <span class="fu">read</span> input</span></code></pre></div>
+<p>The above compiles, but is it correct? If the numbers that the user gives index the options available for a given choice, then we need to turn that into a global index for <code>allChoices</code>. We included that information in the second part of the tuples of <code>opts</code>. Here’s what we really want:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>determineNextChoice choice input <span class="ot">=</span> <span class="fu">snd</span> (opts choice <span class="op">!!</span> <span class="fu">read</span> input)</span></code></pre></div>
+<p><code>snd :: (a, b) -&gt; b</code> extracts the second part of the tuples returned by <code>opts choice</code>.</p>
+<p>Implementing <code>displayOptions</code> will be a bit trickier.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>displayOptions choice <span class="ot">=</span> <span class="fu">undefined</span></span></code></pre></div>
+<p>Let’s work backwards. It’s straightforward to extract the options from our choice.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(opts choice)<span class="ot"> ::</span> [(<span class="dt">String</span>, <span class="dt">Int</span>)]</span></code></pre></div>
+<p>If we only had one option, we could print it by extracting the first element of the pair and using <code>putStrLn</code>. I.e., if <code>opt :: (String, Int)</code> then we can print it with:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">putStrLn</span> <span class="op">.</span> <span class="fu">fst</span>) opt</span></code></pre></div>
+<p>You may have heard of the very useful function <code>map :: (a -&gt; b) -&gt; [a] -&gt; [b]</code>. <code>map</code> takes a function, and applies it to every element of the list. So, are we done?</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>displayOptions choice <span class="ot">=</span> <span class="fu">map</span> (<span class="fu">putStrLn</span> <span class="op">.</span> <span class="fu">fst</span>) (opts choice)</span></code></pre></div>
+<p>If you try the above code, you’ll see it fails to compile. What’s going wrong is we’re mapping a function of type <code>a -&gt; IO ()</code> to a list <code>[a]</code>, which gives us something of type <code>[IO ()]</code>. What we need is some way to take a bunch of IO actions and turn them into one IO action which performs each in sequence.</p>
+<p>When you’re in a spot like this, <a href="https://hoogle.haskell.org/">Hoogle</a> is your friend. You can use it to search for a function based on the <em>type</em> of function that you need. In this case, we worked out that we need something of type <code>[IO ()] -&gt; IO ()</code>. Typing this into Hoogle, we see that the prelude provides the following function.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sequence_</span><span class="ot"> ::</span> (<span class="dt">Foldable</span> t, <span class="dt">Monad</span> m) <span class="ot">=&gt;</span> t (m a) <span class="ot">-&gt;</span> m ()</span></code></pre></div>
+<p>What happened here is that Hoogle worked out that we can use a much more general function than the one we asked for, because <code>[]</code> is an instance of <code>Foldable</code> and <code>IO</code> is an instance of <code>Monad</code>. Perfect! Let’s write our (nearly) finished function.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>displayOptions choice <span class="ot">=</span> <span class="fu">sequence_</span> <span class="op">$</span> <span class="fu">map</span> (<span class="fu">putStrLn</span> <span class="op">.</span> <span class="fu">fst</span>) (opts choice)</span></code></pre></div>
+<p>We could call ourselves done now. But if we are to run our [AAA](https://en.wikipedia.org/wiki/AAA_(video_game_industry%29) game, we’ll see something like the following:</p>
+<pre class="console"><code>You have embarked on a journey to create a CYOA game. How will you start?
+Choose a programming language
+Give up and go home</code></pre>
+<p>Hmmm. It would be much nicer if we had something more like the example output we showed earlier. In order to do this, we need to get information about the index of each option when we map.</p>
+<p>What we want is something like Python’s <code>enumerate</code>, a function that takes a list of type <code>[a]</code> and turns it into a list of type <code>[(Int, a)]</code>, where the first value in the tuple gives us the index of the item.</p>
+<p>Haskell provides <code>zip :: [a] -&gt; [b] -&gt; [(a, b)]</code>. Using the power of lazily evaluated lists, we can get <code>enumerate</code> by <code>zip</code>-ing a list with <code>[0..]</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>displayOptions choice <span class="ot">=</span> <span class="fu">sequence_</span> <span class="op">$</span> <span class="fu">map</span> (<span class="fu">putStrLn</span> <span class="op">.</span> showOpt) (<span class="fu">zip</span> [<span class="dv">0</span><span class="op">..</span>] <span class="op">$</span> opts choice)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> showOpt (idx, (text, _)) <span class="ot">=</span> <span class="st">&quot; (&quot;</span> <span class="op">++</span> <span class="fu">show</span> idx <span class="op">++</span> <span class="st">&quot;) &quot;</span> <span class="op">++</span> text</span></code></pre></div>
+<p>And now, we are done.</p>
+<h2 id="making-some-improvements">Making Some Improvements</h2>
+<p>Our game is finished, and we could leave it there. That being said, there are several places where our implementation could easily be improved.</p>
+<ol type="1">
+<li>We don’t <em>really</em> really handle the case where there are no options to take.</li>
+<li>It is a lot of mental load on the programmer to make sure the indexes are accurate.</li>
+</ol>
+<p>We’ll focus on problem 2, as it is a lot more interesting.</p>
+<h3 id="solution-1.-using-a-string-ident-lookup">Solution 1. Using a string-ident lookup</h3>
+<p>One of the ways we could solve this problem is by associating each possible choice by a unique identifying string. For example:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ot">allChoices ::</span> [(<span class="dt">String</span>, <span class="dt">Choice</span>)]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>allChoices <span class="ot">=</span> [</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;start&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;You have embarked on a journey to create a CYOA game. How will you start?&quot;</span> [(<span class="st">&quot;Choose a programming language&quot;</span>, <span class="st">&quot;choose-language&quot;</span>), (<span class="st">&quot;Give up and go home&quot;</span>, <span class="st">&quot;go-home&quot;</span>)])</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  , <span class="co">-- and so on...</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
+<p>Then instead of indexing, we could provide this string and use Haskell’s handy <code>lookup :: Eq a =&gt; a -&gt; [(a, b)] -&gt; Maybe b</code> function to pull choices out.</p>
+<p>This is definitely a big improvement. It’s a lot easier to keep track of meaningful names than it is indexes. Further, if the order of choices in the list changes, or one is removed, then all our work is not lost. However, there are still some problems with this approach.</p>
+<p>The main one is that it is totally possible to accidentally mistype or misremember an identifier. The onus is on the programmer to go through and check every possible path to make sure this hasn’t happened. Haskell has such a powerful type system, is there no way we could just get the compiler to do that work for us?</p>
+<h3 id="solution-2.-getting-the-compiler-to-do-that-work-for-us">Solution 2. Getting the compiler to do that work for us</h3>
+<p>If you are familiar with similar problems in other languages, you may have already thought of the idea of using enumerations: we can encode all the possible identifiers in the type system.</p>
+<p>An enum in Haskell is just a datatype with several constructors:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">ChoiceIdent</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">=</span> <span class="dt">Start</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">ChooseLanguage</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">LoseGame</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">WinGame</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- We&#39;ll derive an `Eq` instance so we can still use `lookup`.</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> <span class="dt">Eq</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ot">allChoices ::</span> [(<span class="dt">ChoiceIdent</span>, <span class="dt">Choice</span>)]</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>allChoices <span class="ot">=</span> [</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  (<span class="dt">Start</span>, <span class="dt">Choice</span> <span class="st">&quot;You have embarked on a journey to create a CYOA game. How will you start?&quot;</span> [(<span class="st">&quot;Choose a programming language&quot;</span>, <span class="dt">ChooseLanguage</span>), (<span class="st">&quot;Give up and go home&quot;</span>, <span class="dt">LoseGame</span>)])</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  , <span class="co">-- and so on...</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
+<p>This is getting pretty good, but there’s still one glaring issue. How do we ensure exhaustiveness? For every possible <code>ChoiceIdent</code>, how do we know that we remembered to define the corresponding <code>Choice</code> in <code>allChoices</code>? Similarly, how do we know that we didn’t accidentally use the same <code>ChoiceIdent</code> for more than one <code>Choice</code>?</p>
+<p>Let’s do away with all this nonsense and implement <code>allChoices</code> directly as what it really is: a map <code>ChoiceIdent -&gt; Choice</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ot">allChoices ::</span> <span class="dt">ChoiceIdent</span> <span class="ot">-&gt;</span> <span class="dt">Choice</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>allChoices ident <span class="ot">=</span> <span class="kw">case</span> ident <span class="kw">of</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Start</span>          <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;You have embarked on a journey to create a CYOA game. How will you start?&quot;</span> [(<span class="st">&quot;Choose a programming language&quot;</span>, <span class="dt">ChooseLanguage</span>), (<span class="st">&quot;Give up and go home&quot;</span>, <span class="dt">LoseGame</span>)]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ChooseLanguage</span> <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;There are many programming languages to pick from. Which will you choose?&quot;</span> [(<span class="st">&quot;Python&quot;</span>, <span class="dt">WinGame</span>), (<span class="st">&quot;Haskell&quot;</span>, <span class="dt">LoseGame</span>)]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">LoseGame</span>       <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Unfortunately, you failed. Maybe next time.&quot;</span> []</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">WinGame</span>        <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Congratulations! You’ve made a Steam #1 bestseller!&quot;</span> []</span></code></pre></div>
+<p>From here, we just have to follow the compilation errors to work out where we need to provide a <code>ChoiceIdent</code> instead of an index. There are only a couple, I believe in you!</p>
+<p><em>Hang on a minute…</em> by improving the maintainability of our code and making it easier to see the paths, we’ve discovered an obvious bug! Choosing Haskell to make our CYOA game maps to <code>LoseGame</code>, but we’ve just shown how simple it really is!</p>
+<h2 id="bonus-chapter-adding-an-inventory-system">Bonus Chapter: Adding an Inventory System</h2>
+<p>Here is the whole code so far.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">ChoiceIdent</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">=</span> <span class="dt">Start</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">ChooseLanguage</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">LoseGame</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">WinGame</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Choice</span> <span class="ot">=</span> <span class="dt">Choice</span> {</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ot">  prompt ::</span> <span class="dt">String</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ot">  opts ::</span> [(<span class="dt">String</span>, <span class="dt">ChoiceIdent</span>)]</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="ot">allChoices ::</span> <span class="dt">ChoiceIdent</span> <span class="ot">-&gt;</span> <span class="dt">Choice</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>allChoices ident <span class="ot">=</span> <span class="kw">case</span> ident <span class="kw">of</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Start</span>          <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;You have embarked on a journey to create a CYOA game. How will you start?&quot;</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                    [(<span class="st">&quot;Choose a programming language&quot;</span>, <span class="dt">ChooseLanguage</span>), (<span class="st">&quot;Give up and go home&quot;</span>, <span class="dt">LoseGame</span>)]</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ChooseLanguage</span> <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;There are many programming languages to pick from. Which will you choose?&quot;</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                    [(<span class="st">&quot;Python&quot;</span>, <span class="dt">WinGame</span>), (<span class="st">&quot;Haskell&quot;</span>, <span class="dt">LoseGame</span>)]</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">LoseGame</span>       <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Unfortunately, you failed. Maybe next time.&quot;</span> []</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">WinGame</span>        <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Congratulations! You’ve made a Steam #1 bestseller!&quot;</span> []</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="ot">determineNextChoice ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ChoiceIdent</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>determineNextChoice choice input <span class="ot">=</span> <span class="fu">snd</span> (opts choice <span class="op">!!</span> <span class="fu">read</span> input)</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>displayOptions choice <span class="ot">=</span> <span class="fu">sequence_</span> <span class="op">$</span> <span class="fu">map</span> (<span class="fu">putStrLn</span> <span class="op">.</span> showOpt) (<span class="fu">zip</span> [<span class="dv">0</span><span class="op">..</span>] <span class="op">$</span> opts choice)</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> showOpt (idx, (text, _)) <span class="ot">=</span> <span class="st">&quot; (&quot;</span> <span class="op">++</span> <span class="fu">show</span> idx <span class="op">++</span> <span class="st">&quot;) &quot;</span> <span class="op">++</span> text</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="ot">loop ::</span> <span class="dt">ChoiceIdent</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>loop choiceIdent <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> choice <span class="ot">=</span> allChoices choiceIdent</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> (prompt choice)</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  displayOptions choice</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  input <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>  loop (determineNextChoice choice input)</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> loop <span class="dt">Start</span></span></code></pre></div>
+<p>Other than just creating a more in-depth story to explore, there are many ways we could improve our game to make it more fun. The world is your oyster. One such way, which we will briefly discuss, could be by adding an inventory system.</p>
+<p>We already discovered the “bug” earlier where picking Haskell as our language results in us losing the game. One way we could fix that is by changing the story: either language will work, but only if we’ve installed the necessary compiler!</p>
+<p>Let’s add the relevant types.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Item</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">=</span> <span class="dt">GHC</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">CPython</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> <span class="dt">Eq</span> <span class="co">-- We&#39;ll need `Eq` to check if items are present in the inventory.</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Inventory</span> <span class="ot">=</span> [<span class="dt">Item</span>]</span></code></pre></div>
+<p>Clearly, the event loop is going to need to take the player’s inventory into account.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ot">loop ::</span> <span class="dt">ChoiceIdent</span> <span class="ot">-&gt;</span> <span class="dt">Inventory</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span></code></pre></div>
+<p>To make life simpler for ourselves, we’re going to assume that taking an option could add items to the player’s inventory, but that there is no way to remove items. Implementing the ability to consume items is left as an exercise.</p>
+<p>Okay, so each option now needs to know what items it can add to the inventory. We can do this by amending its type from <code>(String, ChoiceIdent)</code> to <code>(String, ChoiceIdent, [Item])</code>.</p>
+<p>We also need a way to determine the next choice to go to based on what we have in our inventory. In that case, perhaps we shouldn’t just provide a <code>ChoiceIdent</code> in each option but rather a function <code>Inventory -&gt; ChoiceIdent</code>. Depending on what the player has, we may want to send them to different parts of the story. In the case where we don’t care what is in the inventory, we can restore the old behaviour by using <code>const :: a -&gt; b -&gt; a</code>, where</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">const</span> a <span class="ot">=</span> \_ <span class="ot">-&gt;</span> a</span></code></pre></div>
+<p>Let’s see an example.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">ChoiceIdent</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">=</span> <span class="dt">Start</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">ChooseLanguage</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">LoseGame</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">WinGame</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">InstallCompiler</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Let&#39;s extract this into a new type as it&#39;s getting a bit convoluted.</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Option</span> <span class="ot">=</span> (<span class="dt">String</span>, <span class="dt">Inventory</span> <span class="ot">-&gt;</span> <span class="dt">ChoiceIdent</span>, [<span class="dt">Item</span>])</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Choice</span> <span class="ot">=</span> <span class="dt">Choice</span> {</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="ot">  prompt ::</span> <span class="dt">String</span>,</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="ot">  opts ::</span> [<span class="dt">Option</span>]</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="ot">allChoices ::</span> <span class="dt">ChoiceIdent</span> <span class="ot">-&gt;</span> <span class="dt">Choice</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>allChoices ident <span class="ot">=</span> <span class="kw">case</span> ident <span class="kw">of</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Start</span>           <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;You have embarked on a journey to create a CYOA game. How will you start?&quot;</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                     [ (<span class="st">&quot;Choose a programming language&quot;</span>, <span class="fu">const</span> <span class="dt">ChooseLanguage</span>, [])</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>                     , (<span class="st">&quot;Install compilers&quot;</span>, <span class="fu">const</span> <span class="dt">InstallCompiler</span>, [])</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>                     , (<span class="st">&quot;Give up and go home&quot;</span>, <span class="fu">const</span> <span class="dt">LoseGame</span>, [])</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>                     ]</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ChooseLanguage</span>  <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;There are many programming languages to pick from. Which will you choose?&quot;</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>                     [ (<span class="st">&quot;Python&quot;</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>                       <span class="co">-- We can use `elem` to check if an item is present in a list.</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>                       , \inv <span class="ot">-&gt;</span> <span class="kw">if</span> <span class="fu">elem</span> <span class="dt">CPython</span> inv</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>                                 <span class="kw">then</span> <span class="dt">WinGame</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>                                 <span class="kw">else</span> <span class="dt">LoseGame</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>                       , [])</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>                     , (<span class="st">&quot;Haskell&quot;</span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>                       , \inv <span class="ot">-&gt;</span> <span class="kw">if</span> <span class="fu">elem</span> <span class="dt">GHC</span> inv</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>                                 <span class="kw">then</span> <span class="dt">WinGame</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>                                 <span class="kw">else</span> <span class="dt">LoseGame</span></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>                       , [])</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>                     ]</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  <span class="dt">InstallCompiler</span> <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Here are the compilers available on your distro:&quot;</span></span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>                     [ (<span class="st">&quot;CPython&quot;</span>, <span class="fu">const</span> <span class="dt">Start</span>, [<span class="dt">CPython</span>])</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>                     , (<span class="st">&quot;GHC&quot;</span>, <span class="fu">const</span> <span class="dt">Start</span>, [<span class="dt">GHC</span>])</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>                     ]</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>  <span class="dt">LoseGame</span>        <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Unfortunately, you failed. Maybe next time.&quot;</span> []</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">WinGame</span>         <span class="ot">-&gt;</span> <span class="dt">Choice</span> <span class="st">&quot;Congratulations! You’ve made a Steam #1 bestseller!&quot;</span> []</span></code></pre></div>
+<p>Now we need to update <code>determineNextChoice</code> so that it returns not only the next <code>ChoiceIdent</code>, but also any new items we may have acquired. We can do this with Haskell’s pattern matching.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ot">determineNextChoice ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> (<span class="dt">ChoiceIdent</span>, [<span class="dt">Item</span>])</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>determineNextChoice choice input <span class="ot">=</span> (ident, items)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> (_, ident, items) <span class="ot">=</span> opts choice <span class="op">!!</span> <span class="fu">read</span> input</span></code></pre></div>
+<blockquote>
+<p>But wait! This code doesn’t compile, as <code>ident</code> is now of type <code>Inventory -&gt; ChoiceIdent</code>!</p>
+</blockquote>
+<p>You’re right. We can fix this by just passing in the player’s inventory.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ot">determineNextChoice ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">Inventory</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> (<span class="dt">ChoiceIdent</span>, [<span class="dt">Item</span>])</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>determineNextChoice choice inventory input <span class="ot">=</span> (getIdent inventory, items)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> (_, getIdent, items) <span class="ot">=</span> opts choice <span class="op">!!</span> <span class="fu">read</span> input</span></code></pre></div>
+<p>We’ll also update <code>displayOptions</code> so that <code>showOpt</code> matches against a triple rather than a pair.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ot">displayOptions ::</span> <span class="dt">Choice</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>displayOptions choice <span class="ot">=</span> <span class="fu">sequence_</span> <span class="op">$</span> <span class="fu">map</span> (<span class="fu">putStrLn</span> <span class="op">.</span> showOpt) (<span class="fu">zip</span> [<span class="dv">0</span><span class="op">..</span>] <span class="op">$</span> opts choice)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> showOpt (idx, (text, _, _)) <span class="ot">=</span> <span class="st">&quot; (&quot;</span> <span class="op">++</span> <span class="fu">show</span> idx <span class="op">++</span> <span class="st">&quot;) &quot;</span> <span class="op">++</span> text</span></code></pre></div>
+<p>Finally, we update the event loop to take these changes into account.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ot">loop ::</span> <span class="dt">ChoiceIdent</span> <span class="ot">-&gt;</span> <span class="dt">Inventory</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>loop choiceIdent inventory <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> choice <span class="ot">=</span> allChoices choiceIdent</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> (prompt choice)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  displayOptions choice</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  input <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- The next iteration of the loop will take the old inventory concatenated</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- with the items we just unlocked.</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> (nextIdent, newItems) <span class="ot">=</span> determineNextChoice choice inventory input</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  loop nextIdent (inventory <span class="op">++</span> newItems)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> loop <span class="dt">Start</span> []</span></code></pre></div>
+<p>And we’re done! That’s how easy it was to add a simple inventory system to our game!</p>
+<h2 id="the-end">The End</h2>
+<p>I hope you found this tutorial useful. If you did, you can let me know by contacting me on fedi <a href="/">(links on the homepage)</a>. If you thought it was terrible, or have constructive feedback, then you can also let me know in the same places!</p>
+<p>If you found it <em>really</em> useful, consider <a href="https://ko-fi.com/piturnah">buying me a coffee</a>.</p>
+<p>I have put the whole code up on <a href="https://codeberg.org/Piturnah/haskell-cyoa-day-1">Codeberg</a> under the MIT license. If you have a creative way to extend or improve it, feel free to submit a PR!</p>
+<p>P.S. If you made it this far: <em>I know that CPython isn’t a compiler.</em> ;)</p>
+    </div>
+
+    
+    <mastodon-comments host=hachyderm.io user=piturnah tootId=113454204285111953></mastodon-comments>
+    
+  </div>
+</body>
+</html>
