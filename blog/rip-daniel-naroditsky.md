@@ -42,9 +42,12 @@ Rest in peace Daniel Naroditsky, a.k.a. Danya, a.k.a. RebeccaHarris, a.k.a. *the
 
 - [My favourite speed run episode](https://www.youtube.com/watch?v=8wVtlbPj9bo)
 - [The first Danya video I watched](https://www.youtube.com/watch?v=0eRS2imxR2c)
-- [Danya excitedly sharing *KID* history](https://youtu.be/cdEASsRLWcg?si=CSn5CUP0ZeJ9n87H&t=433)
+- [Danya passionately sharing *KID* history](https://youtu.be/cdEASsRLWcg?si=CSn5CUP0ZeJ9n87H&t=433)
 - [Agadmator covers Danya's favourite of his games](https://www.youtube.com/watch?v=gsCBMIVmkLk)
 - [Danya plays blind bullet against Anna Cramling](https://www.youtube.com/watch?v=rmLDo3SKUo8)
+
+- [Tribute from Charlotte Chess Center](https://www.youtube.com/watch?v=5ry93-TmsNY)
+- [Memorial fund](https://givebutter.com/naroditsky)
 
 [^1]: The speed run series would see Danya starting with a low-rated chess.com account and playing against players to progress his rating, each game coming with deeply insightful commentary and post-game analysis.
 
