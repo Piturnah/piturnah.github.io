@@ -45,7 +45,6 @@ Rest in peace Daniel Naroditsky, a.k.a. Danya, a.k.a. RebeccaHarris, a.k.a. *the
 - [Danya passionately sharing *KID* history](https://youtu.be/cdEASsRLWcg?si=CSn5CUP0ZeJ9n87H&t=433)
 - [Agadmator covers Danya's favourite of his games](https://www.youtube.com/watch?v=gsCBMIVmkLk)
 - [Danya plays blind bullet against Anna Cramling](https://www.youtube.com/watch?v=rmLDo3SKUo8)
-
 - [Tribute from Charlotte Chess Center](https://www.youtube.com/watch?v=5ry93-TmsNY)
 - [Memorial fund](https://givebutter.com/naroditsky)
 
