@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/icon.png">
+  
+    <title>Piturnah.xyz | The Unreasonable Effectfulness of Haskell</title>
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+
+  <link rel="alternate" type="application/atom+xml" href="/atom.xml">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- and it's easy to individually load additional languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
+
+  <script>hljs.highlightAll();</script>
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="module" src="https://cdn.jsdelivr.net/gh/dpecos/mastodon-comments@6fe36e7e308412cc02f26ae1477987a75d32e58f/mastodon-comments.js"></script>
+  
+</head>
+
+<body>
+  <header>
+    <script src="/assets/header-scroll.js"></script>
+    <a href="/" class="home-button">piturnah<span class="domain">.xyz</span></a>
+    <nav>
+        <ul>
+            <li><a href="https://ko-fi.com/piturnah">Ko-fi</a></li>
+            <li><a href="https://codeberg.org/Piturnah">Codeberg</a></li>
+            <li><a href="https://hachyderm.io/@piturnah">Mastodon</a></li>
+            <li>
+                <a href="https://github.com/Piturnah/piturnah.github.io">
+                    <svg
+                      viewBox="0 0 98 96"
+                      width="32"
+                      height="34"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+  <div class="main-content">
+    <div class="box">
+      
+      
+      
+        <h1>The Unreasonable Effectfulness of Haskell</h1>
+        <p>-# 2025-03-14 #-</p>
+      
+      <p>One of the first things you hear when learning about functional programming is the idea that functional programs do not have side-effects. The author may then proceed to give some examples of side-effects, perhaps including:</p>
+<ul>
+<li>Interactions with state</li>
+<li>Input/Output</li>
+<li>Control flow, like loops</li>
+</ul>
+<p>And from this you may walk away thinking something like</p>
+<blockquote>
+<p>What? These programming languages are clearly useless. How can I write code without I/O or even control flow?</p>
+</blockquote>
+<p>But we’ve missed something. Haskell is just as effectful as any other programming language. We are claiming an omission of <em>side</em>-effects, not of effects in general. You can <a href="https://www.youtube.com/watch?v=iSmkqocn0oQ&amp;t=130">fire the missiles</a> after all.</p>
+<h2 id="when-is-an-effect-not-a-side-effect">When is an effect not a side-effect?</h2>
+<p>You may be aware that functional programming finds its origins in what’s known as the <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ-calculus</a>. The λ-calculus is particularly interesting to PL researchers and logicians because typed variants are easy to give a formal semantics to which can be mathematically reasoned about — we find that they correspond with <a href="https://en.wikipedia.org/wiki/Category_theory">categories</a>; where the objects of the category correspond with the types of the language. Category theory taught us that effects may be modelled by <em>monads</em>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>As a programmer, you don’t need to care about categories. Concretely what this means is that we can expect to find a <em>type</em> corresponding to computations which produce a given effect. A lack of side-effects doesn’t mean our language lacks effects entirely — on the contrary, it means that effects are first-class. We can reason about them on the level of types!</p>
+<h3 id="example-1">Example 1</h3>
+<p>In Python, we can freely loop over some integers and print them:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div>
+<p>In Haskell, we can do the same!</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>forM_ [<span class="dv">0</span><span class="op">..</span><span class="dv">4</span>] <span class="op">$</span> \i <span class="ot">-&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(i)</span></code></pre></div>
+<p>What’s the type of <code>for</code> in Python? It seems like a bizarre question to ask. <code>for</code> is control flow, why should it be typed? On the other hand, Haskell readily has an answer for this question:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">forM_ ::</span> (<span class="dt">Monad</span> m) <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> m ()</span></code></pre></div>
+<p>The type tells us “given a list of <code>a</code>s, and a function which goes from <code>a -&gt; b</code> producing some effect of type <code>m</code>, <code>forM_</code> will also give an effect of type <code>m</code>.” In particular the final effect is just the sequence of the ones we get from applying the given function to all of our <code>a</code>s.</p>
+<p>In our case <code>m</code> was <code>IO</code>, the type of Input/Output.</p>
+<h3 id="example-2">Example 2</h3>
+<p>In Python, we can interact with a stateful value:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> foo():</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="dv">41</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div>
+<p>In Haskell, we can do the same!</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>foo <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    put <span class="dv">41</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    modify (<span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>What’s the type of the statement <code>x = 41</code>? Again, it’s a weird question to be asking in Python-land. But why is it a weird question? Haskell knows: The type of <code>put 41</code> is just</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">State</span> <span class="dt">Int</span> ()</span></code></pre></div>
+<p>It’s a thing which gives no value (an element of the unit type, <code>()</code>), and does some kind of stateful operation on a store of <code>Int</code>.</p>
+<h2 id="why-should-you-care">Why should you care?</h2>
+<p>As programmers rather than computer scientists, the main reason we care about types in our languages is that it allows us to reason about notions of correctness. If my <code>add</code> function doesn’t return a number, my compiler can tell me that. There seems to be a blind spot when it comes to effects, which is surprising given that doing arbitrary effectful things all over the shop is a sure-fire way to invalidate some invariants.</p>
+<p>Just as I want to know if my <code>add</code> function isn’t returning numbers, I also want to know if it’s printing to the screen, or modifying program state! But, that doesn’t mean I want to, or have to, give up those abilities.</p>
+<h2 id="sneaky-endnote">Sneaky Endnote</h2>
+<p>I must confess that I told a bit of a lie about control-flow. Haskell programs are declarative, and so <em>technically speaking</em> we don’t have control-flow. But it doesn’t matter — we can produce the same effects regardless.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Eugenio Moggi (1991). <a href="https://www.cs.cmu.edu/~crary/819-f09/Moggi91.pdf"><em>Notions of computation and monads</em></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    </div>
+
+    
+    <mastodon-comments host=mathstodon.xyz user=piturnah tootId=114162019239955994></mastodon-comments>
+    
+  </div>
+</body>
+</html>
