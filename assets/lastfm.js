@@ -8,7 +8,7 @@ function get_lastfm() {
             const field = document.getElementById("currently-listening");
 
             if (result["@attr"]?.nowplaying === "true") {
-                field.innerHTML = `I'm currently listening to <a href="${result.url}">${result.name}</a> by ${result.artist["#text"]}.`;
+                field.innerHTML = `I'm currently listening to <a href="${result.url}">${result.name}</a>, by ${result.artist["#text"]}.`;
             } else {
                 field.innerHTML = `The last track I listened to was <a href="${result.url}">${result.name}</a> by ${result.artist["#text"]}, ${timeSince(new Date(result.date.uts * 1000))} ago.`;
             }
