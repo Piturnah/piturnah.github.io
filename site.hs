@@ -3,6 +3,7 @@
 import Control.Monad (filterM)
 import Data.Maybe (isNothing)
 import Hakyll
+import Hakyll.Core.Compiler.Internal (compilerNoResult)
 import System.FilePath
 import Text.Pandoc.Options
 
@@ -49,6 +50,11 @@ loadPosts = do
                     )
     pure (posts, postCtx)
 
+getContext :: Item a -> Context a
+getContext item = Context $ \k _ _ -> do
+    value <- getMetadataField (itemIdentifier item) k
+    maybe (compilerNoResult []) (return . StringField) value
+
 main :: IO ()
 main = hakyll $ do
     match "_templates/*" . compile $ templateCompiler
@@ -66,8 +72,15 @@ main = hakyll $ do
         compile $ do
             posts <- recentFirst =<< filterUnlisted =<< loadAll "music/sotw/*"
             let lastPost = head posts
-            loadAndApplyTemplate "_templates/music.html" defaultContext $
-                emptyItem "music/index.html"
+            let ctx =
+                    constField "layout" "none"
+                        <> getContext lastPost
+                        <> defaultContext
+            loadAndApplyTemplate "_templates/music.html" ctx $
+                lastPost
+                    { itemIdentifier = "music/index.html"
+                    , itemBody = itemBody lastPost
+                    }
 
     match "blog/**.md" $ do
         route mdRoute
@@ -114,6 +127,9 @@ main = hakyll $ do
             getResourceBody
                 >>= applyTemplate "<pre>$body$</pre>" defaultContext
                     . fmap escapeHtml
+
+    -- Compile the SOTWs plainly.
+    match "music/sotw/**.md" $ route idRoute >> compile pandocCompiler
 
     match "**.md" $ route mdRoute >> compileWith pandocCompiler
     match "**.html" $ route idRoute >> compileWith getResourceBody
