@@ -226,3 +226,8 @@ h1 {
 }
 
 p { color: #d6d6d6; }
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}

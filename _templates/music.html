@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/icon.png">
+  <title>Piturnah.xyz | Music</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/sotw.css">
+
+  <link rel="alternate" type="application/atom+xml" href="/atom.xml"> <!-- TODO: atom -->
+
+</head>
+
+<body>
+
+  $partial("_templates/nav.html")$
+
+  <div class="main-content">
+    <div id="sotw">
+      <div id="sotw-header" class="flex-row">
+        <div id="sotw-album">
+          <div id="sotw-shadow"></div>
+          <div id="sotw-disc">
+            <div id="sotw-disc-shadow"></div>
+            <div id="sotw-disc-inner">
+              <div id="sotw-disc-label">
+                <div id="sotw-disc-hole"></div>
+                <span id="sotw-disc-title"></span>
+              </div>
+            </div>
+          </div>
+          <div id="sotw-case">
+          </div>
+        </div>
+        <div id="sotw-titles">
+          <h1>Song of the Week</h1>
+          <h2>Here Comes the Sun</h2>
+          <h3>The Beatles</h3>
+        </div>
+      </div>
+      <div class="box">
+          $body$
+      </div>
+    </div>
+  </div>
+</body>
+</html>

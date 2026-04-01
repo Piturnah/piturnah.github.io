@@ -61,6 +61,14 @@ main = hakyll $ do
             loadAndApplyTemplate "_templates/index.html" ctx $
                 emptyItem "index.html"
 
+    create ["music/index.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< filterUnlisted =<< loadAll "music/sotw/*"
+            let lastPost = head posts
+            loadAndApplyTemplate "_templates/music.html" defaultContext $
+                emptyItem "music/index.html"
+
     match "blog/**.md" $ do
         route mdRoute
         compile $
