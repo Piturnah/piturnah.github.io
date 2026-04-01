@@ -41,11 +41,12 @@
 }
 
 #playing-vinyl:hover {
-    border-color: #F92672
+    border-color: #F92672;
+    cursor: pointer;
 }
 
 #playing-vinyl:hover #playing-inner {
-    background: #F92672
+    background: #F92672;
 }
 
 .spin-animation {
