@@ -4,11 +4,14 @@ function get_lastfm() {
         .then((response) => response.text())
         .then((text) => {
             let result = JSON.parse(text).recenttracks.track[0];
-            console.log(result);
             const field = document.getElementById("currently-listening");
 
             if (result["@attr"]?.nowplaying === "true") {
                 field.innerHTML = `I'm currently listening to <a href="${result.url}">${result.name}</a>, by ${result.artist["#text"]}.`;
+                const vinyl = document.getElementById("playing-vinyl")
+                vinyl.addEventListener("click", (ev) => window.location.href = result.url);
+                vinyl.style.backgroundImage = `url(${result.image[1]["#text"]})`;
+                vinyl.style.display = "block";
             } else {
                 field.innerHTML = `The last track I listened to was <a href="${result.url}">${result.name}</a> by ${result.artist["#text"]}, ${timeSince(new Date(result.date.uts * 1000))} ago.`;
             }

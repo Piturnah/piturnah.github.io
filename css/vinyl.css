@@ -1,0 +1,63 @@
+:root {
+    --vinyl-size: 2.3em;
+    --vinyl-inner-size: calc(var(--vinyl-size) / 5);
+    --vinyl-hole-size: calc(var(--vinyl-size) / 10);
+}
+
+#playing-vinyl {
+    border-radius: 50%;
+    position: absolute;
+    display: none;
+    margin: 0 auto;
+    width: var(--vinyl-size);
+    height: var(--vinyl-size);
+    border: 4px solid black;
+    background-image: url("https://lastfm.freetls.fastly.net/i/u/64s/21394faeb4c2e3696ac5c2bfb6e93672.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    left: calc(var(--vinyl-size) * -1 - 0.75em);
+    bottom: 20px;
+}
+
+#playing-inner {
+    border-radius: 50%;
+    position: relative;
+    top: calc((100% - var(--vinyl-inner-size)) / 2);
+    left: calc((100% - var(--vinyl-inner-size)) / 2);
+    width: var(--vinyl-inner-size);
+    height: var(--vinyl-inner-size);
+    background: black;
+}
+
+#playing-hole {
+    border-radius: 50%;
+    position: relative;
+    top: calc((100% - var(--vinyl-hole-size)) / 2);
+    left: calc((100% - var(--vinyl-hole-size)) / 2);
+    width: var(--vinyl-hole-size);
+    height: var(--vinyl-hole-size);
+    background: #272822;
+}
+
+#playing-vinyl:hover {
+    border-color: #F92672
+}
+
+#playing-vinyl:hover #playing-inner {
+    background: #F92672
+}
+
+.spin-animation {
+    animation: spin 10s infinite linear;
+}
+
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    } 
+}
