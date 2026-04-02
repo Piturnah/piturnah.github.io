@@ -15,24 +15,29 @@
 </head>
 
 <body>
+  <script>
+      function gotoSong() {
+          window.open("$listenUrl$", '_blank').focus();
+      }
+  </script>
 
   $partial("_templates/nav.html")$
 
   <div class="main-content">
     <div id="sotw">
       <div id="sotw-header" class="flex-row">
-        <div id="sotw-album">
+        <div id="sotw-album" onclick="gotoSong()">
           <div id="sotw-shadow"></div>
           <div id="sotw-disc">
             <div id="sotw-disc-shadow"></div>
             <div id="sotw-disc-inner">
-              <div id="sotw-disc-label">
+              <div id="sotw-disc-label" style="background-image: url($coverSm$)">
                 <div id="sotw-disc-hole"></div>
                 <span id="sotw-disc-title"></span>
               </div>
             </div>
           </div>
-          <div id="sotw-case">
+          <div id="sotw-case" style="background-image: url($coverLg$)">
           </div>
         </div>
         <div id="sotw-titles">

@@ -3,7 +3,6 @@
 }
 
 #sotw-case {
-    background-image: url("https://lastfm.freetls.fastly.net/i/u/770x0/f304ba0296794c6fc9d0e1cccd194ed0.jpg#f304ba0296794c6fc9d0e1cccd194ed0");
     background-size: cover;
     background-repeat: no-repeat;
     height: var(--case-size);
@@ -50,6 +49,10 @@
     transition: 0.5s ease-in-out;
 }
 
+#sotw-album:hover {
+    cursor: pointer;
+}
+
 #sotw-album:hover #sotw-disc {
     transform: translate(60px, 0) rotate(120deg);
 }
@@ -77,7 +80,6 @@
     width: var(--label-size);
     height: var(--label-size);
     background: tomato; 
-    background-image: url("https://lastfm.freetls.fastly.net/i/u/770x0/f304ba0296794c6fc9d0e1cccd194ed0.jpg#f304ba0296794c6fc9d0e1cccd194ed0");
     background-size: cover;
     color: white; 
     text-align: center;
