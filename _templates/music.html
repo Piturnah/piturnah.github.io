@@ -40,10 +40,18 @@
           <div id="sotw-case" style="background-image: url($coverLg$)">
           </div>
         </div>
-        <div id="sotw-titles">
-          <h1>Song of the Week</h1>
-          <h2>$song$</h2>
-          <h3>$artist$</h3>
+        <div id="sotw-titles" class="flex-col" style="width:100%; justify-content:space-between">
+          <div>
+              <h1>Song of the Week</h1>
+              <h2 id="sotw-date">($published$)</h2>
+          </div>
+          <div class="flex-row" style="justify-content:space-between;">
+            <div>
+              <h2>$song$</h2>
+              <h3 id="sotw-date">by $artist$</h3>
+            </div>
+            
+          </div>
         </div>
       </div>
       <div class="box">

@@ -1,12 +1,17 @@
+:root {
+    --sotw-case-size: 200px;
+}
+
 #sotw-header {
     margin-bottom: 1em;
+    height: var(--sotw-case-size);
 }
 
 #sotw-case {
     background-size: cover;
     background-repeat: no-repeat;
-    height: var(--case-size);
-    width: var(--case-size);
+    height: var(--sotw-case-size);
+    width: var(--sotw-case-size);
     position: relative;
     z-index: 2;
 }
@@ -20,15 +25,14 @@
 }
 
 #sotw-album {
-    --case-size: 200px;
-    height: var(--case-size);
-    width: var(--case-size);
+    height: var(--sotw-case-size);
+    width: var(--sotw-case-size);
     margin-right: 2rem;
     position: relative;
 }
 
 #sotw-disc {
-    --disc-size: calc(var(--case-size) * 0.95);
+    --disc-size: calc(var(--sotw-case-size) * 0.95);
     --ridge-col: #191919;
     position: absolute;
     width: var(--disc-size);
@@ -37,7 +41,7 @@
     border: 5px solid black;
     top: 0;
     margin-top: auto;
-    right: calc(var(--case-size) / -10);
+    right: calc(var(--sotw-case-size) / -10);
     background: repeating-radial-gradient(
         circle,
         var(--ridge-col),
@@ -60,6 +64,17 @@
 #sotw-album:hover #sotw-disc-shadow {
     transform: rotate(-120deg) !important;
 }
+
+#sotw-album:hover #sotw-case {
+    transform: translate(-10px, 0)
+}
+
+#sotw-album:hover #sotw-shadow {
+    transform: translate(-10px, 0)
+}
+
+#sotw-case { transition: 0.5s ease-in-out; }
+#sotw-shadow { transition: 0.5s ease-in-out; }
 
 #sotw-disc-inner {
     --inner-size: calc(var(--disc-size) / 2);
@@ -122,3 +137,23 @@
 }
 
 #sotw-titles { z-index: 3; }
+
+:root {
+    --grey: #75715e;
+}
+
+#sotw-titles h2 { margin: 0; }
+#sotw-titles h3 { margin: 0; }
+
+#sotw-date {
+    color: var(--grey);
+    text-shadow: 5px 5px 5px black;
+}
+
+#footnotes {
+    font-size: 0.8em;
+}
+
+#footnotes p {
+    margin: 0.3em;
+}
