@@ -1,7 +1,7 @@
 ---
 song: Long Haired Lady
 artist: Paul & Linda McCartney
-published: 2026-04-11
+published: 2026-04-10
 coverLg: "https://lastfm.freetls.fastly.net/i/u/770x0/dfaa72ddeb51d835f5ba2d1554d8adeb.jpg#dfaa72ddeb51d835f5ba2d1554d8adeb"
 coverSm: "https://lastfm.freetls.fastly.net/i/u/770x0/dfaa72ddeb51d835f5ba2d1554d8adeb.jpg#dfaa72ddeb51d835f5ba2d1554d8adeb"
 listenUrl: "https://www.youtube.com/watch?v=ZStOefwQZwU"
