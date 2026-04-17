@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Pit's Song of the Week</title>
+    <subtitle><![CDATA[Weekly(ish) ramblings on my favourite music]]></subtitle>
+    <link href="https://piturnah.xyz/music/atom.xml" rel="self" />
+    <link href="https://piturnah.xyz" />
+    <id>https://piturnah.xyz/music/atom.xml</id>
+    <author>
+        <name>Peter Hebden</name>
+        
+    </author>
+    <updated>2026-04-17T00:00:00Z</updated>
+    <entry>
+    <title>I Want You (She&#39;s So Heavy) by The Beatles</title>
+    <link href="https://piturnah.xyz/music/sotw/2026-04-17-i-want-you-shes-so-heavy/" />
+    <id>https://piturnah.xyz/music/sotw/2026-04-17-i-want-you-shes-so-heavy/</id>
+    <published>2026-04-17</published>
+    <updated>2026-04-17T00:00:00Z</updated>
+    <summary type="html"><![CDATA[My song of the week for 2026-04-17]]></summary>
+</entry>
+<entry>
+    <title>Long Haired Lady by Paul &amp; Linda McCartney</title>
+    <link href="https://piturnah.xyz/music/sotw/2026-04-10-long-haired-lady/" />
+    <id>https://piturnah.xyz/music/sotw/2026-04-10-long-haired-lady/</id>
+    <published>2026-04-10</published>
+    <updated>2026-04-10T00:00:00Z</updated>
+    <summary type="html"><![CDATA[My song of the week for 2026-04-10]]></summary>
+</entry>
+
+</feed>

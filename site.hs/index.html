@@ -1,0 +1,188 @@
+<pre>{-# LANGUAGE OverloadedStrings #-}
+
+import Control.Monad (filterM)
+import Data.Maybe (isNothing)
+import Hakyll
+import Hakyll.Core.Compiler.Internal (compilerNoResult)
+import System.FilePath
+import Text.Pandoc.Options
+
+emptyField :: String -&gt; Context a
+emptyField name = boolField name $ const True
+
+stringField :: String -&gt; (Item a -&gt; String) -&gt; Context a
+stringField name f = field name $ pure . f
+
+emptyItem :: Identifier -&gt; Item String
+emptyItem = flip Item &quot;&quot;
+
+mdRoute :: Routes
+mdRoute = customRoute $ (&lt;/&gt; &quot;index.html&quot;) . dropExtension . toFilePath
+
+compileWith :: Compiler (Item String) -&gt; Rules ()
+compileWith compiler = compile $ do
+    identifier &lt;- getUnderlying
+    layout &lt;- getMetadataField identifier &quot;layout&quot;
+    compiler &gt;&gt;= case layout of
+        Just &quot;none&quot; -&gt; pure
+        Just path -&gt; loadAndApplyTemplate (fromFilePath path) defaultContext
+        Nothing -&gt; loadAndApplyTemplate &quot;_templates/default.html&quot; defaultContext
+
+filterUnlisted :: (MonadMetadata m) =&gt; [Item String] -&gt; m [Item String]
+filterUnlisted = filterM $ \item -&gt;
+    isNothing &lt;$&gt; getMetadataField (itemIdentifier item) &quot;unlisted&quot;
+
+loadPosts :: Compiler ([Item String], Context String)
+loadPosts = do
+    posts &lt;-
+        recentFirst
+            =&lt;&lt; filterUnlisted
+            =&lt;&lt; loadAll (&quot;blog/*&quot; .&amp;&amp;. complement &quot;blog/index.html&quot;)
+    let lastPost = last posts
+    let postCtx =
+            mapContextBy (== &quot;url&quot;) dropFileName defaultContext
+                &lt;&gt; stringField
+                    &quot;bullet&quot;
+                    ( \item -&gt;
+                        if itemBody item == itemBody lastPost
+                            then &quot;&amp;#x2514;&amp;#x2500;&quot;
+                            else &quot;&amp;#x251c;&amp;#x2500;&quot;
+                    )
+    pure (posts, postCtx)
+
+getContext :: Item a -&gt; Context a
+getContext item = Context $ \k _ _ -&gt; do
+    value &lt;- getMetadataField (itemIdentifier item) k
+    maybe (compilerNoResult []) (return . StringField) value
+
+main :: IO ()
+main = hakyll $ do
+    match &quot;_templates/*&quot; . compile $ templateCompiler
+
+    create [&quot;index.html&quot;] $ do
+        route idRoute
+        compile $ do
+            (posts, postCtx) &lt;- loadPosts
+            let ctx = defaultContext &lt;&gt; listField &quot;posts&quot; postCtx (pure posts)
+            loadAndApplyTemplate &quot;_templates/index.html&quot; ctx $
+                emptyItem &quot;index.html&quot;
+
+    create [&quot;music/index.html&quot;] $ do
+        route idRoute
+        compile $ do
+            posts &lt;- recentFirst =&lt;&lt; filterUnlisted =&lt;&lt; loadAllSnapshots &quot;music/sotw/*&quot; &quot;content&quot;
+            let lastPost = head posts
+            let ctx =
+                    constField &quot;layout&quot; &quot;none&quot;
+                        &lt;&gt; getContext lastPost
+                        &lt;&gt; listField
+                            &quot;posts&quot;
+                            ( mapContextBy
+                                (== &quot;url&quot;)
+                                dropFileName
+                                defaultContext
+                            )
+                            (pure . drop 1 $ posts)
+                        &lt;&gt; defaultContext
+            loadAndApplyTemplate &quot;_templates/music.html&quot; ctx $
+                lastPost
+                    { itemIdentifier = &quot;music/index.html&quot;
+                    , itemBody = itemBody lastPost
+                    }
+
+    match &quot;blog/**.md&quot; $ do
+        route mdRoute
+        compile $
+            pandocCompilerWith
+                defaultHakyllReaderOptions
+                defaultHakyllWriterOptions{writerHTMLMathMethod = MathJax &quot;&quot;}
+                &gt;&gt;= saveSnapshot &quot;content&quot;
+                &gt;&gt;= loadAndApplyTemplate
+                    &quot;_templates/default.html&quot;
+                    (defaultContext &lt;&gt; emptyField &quot;blog&quot;)
+
+    create [&quot;atom.xml&quot;] $ do
+        route idRoute
+        compile $
+            loadAll (&quot;blog/*&quot; .&amp;&amp;. complement &quot;blog/index.html&quot;)
+                &gt;&gt;= filterUnlisted
+                &gt;&gt;= recentFirst
+                &gt;&gt;= renderAtom
+                    FeedConfiguration
+                        { feedTitle = &quot;piturnah.xyz&quot;
+                        , feedDescription = &quot;Pit&#39;s blog&quot;
+                        , feedAuthorName = &quot;Peter Hebden&quot;
+                        , feedAuthorEmail = &quot;&quot;
+                        , feedRoot = &quot;https://piturnah.xyz&quot;
+                        }
+                    defaultContext
+
+    create [&quot;music/atom.xml&quot;] $ do
+        route idRoute
+        compile $
+            loadAll &quot;music/sotw/*&quot;
+                &gt;&gt;= recentFirst
+                &gt;&gt;= renderAtom
+                    FeedConfiguration
+                        { feedTitle = &quot;Pit&#39;s Song of the Week&quot;
+                        , feedDescription =
+                            &quot;Weekly(ish) ramblings on my favourite music&quot;
+                        , feedAuthorName = &quot;Peter Hebden&quot;
+                        , feedAuthorEmail = &quot;&quot;
+                        , feedRoot = &quot;https://piturnah.xyz&quot;
+                        }
+                    ( field &quot;title&quot; getTitle
+                        &lt;&gt; field &quot;description&quot; getDescription
+                        &lt;&gt; mapContextBy (== &quot;url&quot;) dropFileName defaultContext
+                    )
+
+    create [&quot;blog/index.html&quot;] $ do
+        route idRoute
+        compile $ do
+            (posts, postCtx) &lt;- loadPosts
+            loadAndApplyTemplate
+                &quot;_templates/blog.html&quot;
+                (listField &quot;posts&quot; postCtx $ pure posts)
+                (emptyItem &quot;blog/index.html&quot;)
+                &gt;&gt;= loadAndApplyTemplate
+                    &quot;_templates/default.html&quot;
+                    defaultContext
+
+    match &quot;site.hs&quot; $ do
+        route (constRoute &quot;site.hs/index.html&quot;)
+        compile $
+            getResourceBody
+                &gt;&gt;= applyTemplate &quot;&lt;pre&gt;$body$&lt;/pre&gt;&quot; defaultContext
+                    . fmap escapeHtml
+
+    -- Compile the SOTWs.
+    match &quot;music/sotw/**.md&quot; $ do
+        route mdRoute
+        compile $
+            pandocCompiler
+                &gt;&gt;= saveSnapshot &quot;content&quot;
+                &gt;&gt;= loadAndApplyTemplate
+                    &quot;_templates/sotw_archive_post.html&quot;
+                    defaultContext
+
+    match &quot;**.md&quot; $ route mdRoute &gt;&gt; compileWith pandocCompiler
+    match &quot;**.html&quot; $ route idRoute &gt;&gt; compileWith getResourceBody
+    match &quot;**&quot; $ route idRoute &gt;&gt; compile copyFileCompiler
+  where
+    getDescription :: Item a -&gt; Compiler String
+    getDescription item = do
+        published &lt;- getMetadataField (itemIdentifier item) &quot;published&quot;
+        pure $ case published of
+            Nothing -&gt; &quot;My song of the week&quot;
+            Just date -&gt; &quot;My song of the week for &quot; ++ date
+
+    getTitle :: Item a -&gt; Compiler String
+    getTitle item = do
+        song &lt;- getMetadataField (itemIdentifier item) &quot;song&quot;
+        artist &lt;- getMetadataField (itemIdentifier item) &quot;artist&quot;
+        pure . concat $
+            [ maybe &quot;[missing title]&quot; escapeHtml song
+            , &quot; by &quot;
+            , maybe &quot;[missing artist]&quot; escapeHtml artist
+            ]
+</pre>
