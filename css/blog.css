@@ -107,3 +107,17 @@ mastodon-comments {
 }
 
 ul { font-size: 1rem !important; }
+
+figure {
+    display: block;
+    max-width: 60%;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+figure img {
+    max-width: 100%;
+    box-shadow: 10px 10px 15px black;
+    border-radius: 7px;
+}
