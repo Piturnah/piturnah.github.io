@@ -131,7 +131,10 @@ main = hakyll $ do
                         , feedAuthorEmail = ""
                         , feedRoot = "https://piturnah.xyz"
                         }
-                    (field "title" getTitle <> field "description" getDescription <> defaultContext)
+                    ( field "title" getTitle
+                        <> field "description" getDescription
+                        <> mapContextBy (== "url") dropFileName defaultContext
+                    )
 
     create ["blog/index.html"] $ do
         route idRoute

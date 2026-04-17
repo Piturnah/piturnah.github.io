@@ -20,20 +20,28 @@
   <div class="main-content">
     $partial("_templates/sotw_partial.html")$
 
-    <h1 style="margin-top:0.5em">Archive</h1>
-    <div id="sotw-playlist" class="box flex-col">
-        $for(posts)$
-           <a href="$url$" class="playlist-item flex-row">
-             <div class="playlist-item-info flex-row">
-               <img src="$coverSm$" width="70px" height="70px" />
-               <div class="flex-col" style="margin-left:1em">
-                 <div class="song-title">$song$</div>
-                 <div>$artist$</div>
-               </div>
+    <div style="margin-top:0.5em;">
+      <h1 style="display:inline;">Archive</h1>
+      <a href="" style="margin-left:0.5em;">
+        <img width="20" height="20" src="/assets/rss.svg" alt="RSS logo" />
+      </a>
+    </div>
+    <div id="sotw-playlist" class="box flex-col" style="margin-bottom:0.5em;">
+      $for(posts)$
+         <a href="$url$" class="playlist-item flex-row">
+           <div class="playlist-item-info flex-row">
+             <img src="$coverSm$" width="70px" height="70px" />
+             <div class="flex-col" style="margin-left:1em">
+               <div class="song-title">$song$</div>
+               <div>$artist$</div>
              </div>
-             $published$
-           </a>
-        $endfor$
+           </div>
+           $published$
+         </a>
+      $endfor$
+    </div>
+    <div style="text-align:end;display:block;">
+      <a href="https://www.last.fm/user/Piturnah/playlists/14531629">last.fm playlist</a>
     </div>
   </div>
 </body>
