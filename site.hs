@@ -70,11 +70,19 @@ main = hakyll $ do
     create ["music/index.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< filterUnlisted =<< loadAll "music/sotw/*"
+            posts <- recentFirst =<< filterUnlisted =<< loadAllSnapshots "music/sotw/*" "content"
             let lastPost = head posts
             let ctx =
                     constField "layout" "none"
                         <> getContext lastPost
+                        <> listField
+                            "posts"
+                            ( mapContextBy
+                                (== "url")
+                                dropFileName
+                                defaultContext
+                            )
+                            (pure . drop 1 $ posts)
                         <> defaultContext
             loadAndApplyTemplate "_templates/music.html" ctx $
                 lastPost
@@ -109,6 +117,22 @@ main = hakyll $ do
                         }
                     defaultContext
 
+    create ["music/atom.xml"] $ do
+        route idRoute
+        compile $
+            loadAll "music/sotw/*"
+                >>= recentFirst
+                >>= renderAtom
+                    FeedConfiguration
+                        { feedTitle = "Pit's Song of the Week"
+                        , feedDescription =
+                            "Weekly(ish) ramblings on my favourite music"
+                        , feedAuthorName = "Peter Hebden"
+                        , feedAuthorEmail = ""
+                        , feedRoot = "https://piturnah.xyz"
+                        }
+                    (field "title" getTitle <> field "description" getDescription <> defaultContext)
+
     create ["blog/index.html"] $ do
         route idRoute
         compile $ do
@@ -128,9 +152,33 @@ main = hakyll $ do
                 >>= applyTemplate "<pre>$body$</pre>" defaultContext
                     . fmap escapeHtml
 
-    -- Compile the SOTWs plainly.
-    match "music/sotw/**.md" $ route idRoute >> compile pandocCompiler
+    -- Compile the SOTWs.
+    match "music/sotw/**.md" $ do
+        route mdRoute
+        compile $
+            pandocCompiler
+                >>= saveSnapshot "content"
+                >>= loadAndApplyTemplate
+                    "_templates/sotw_archive_post.html"
+                    defaultContext
 
     match "**.md" $ route mdRoute >> compileWith pandocCompiler
     match "**.html" $ route idRoute >> compileWith getResourceBody
     match "**" $ route idRoute >> compile copyFileCompiler
+  where
+    getDescription :: Item a -> Compiler String
+    getDescription item = do
+        published <- getMetadataField (itemIdentifier item) "published"
+        pure $ case published of
+            Nothing -> "My song of the week"
+            Just date -> "My song of the week for " ++ date
+
+    getTitle :: Item a -> Compiler String
+    getTitle item = do
+        song <- getMetadataField (itemIdentifier item) "song"
+        artist <- getMetadataField (itemIdentifier item) "artist"
+        pure . concat $
+            [ maybe "[missing title]" escapeHtml song
+            , " by "
+            , maybe "[missing artist]" escapeHtml artist
+            ]

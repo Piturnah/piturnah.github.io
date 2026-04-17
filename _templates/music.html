@@ -15,48 +15,25 @@
 </head>
 
 <body>
-  <script>
-      function gotoSong() {
-          window.open("$listenUrl$", '_blank').focus();
-      }
-  </script>
-
   $partial("_templates/nav.html")$
 
   <div class="main-content">
-    <div id="sotw">
-      <div id="sotw-header" class="flex-row">
-        <div id="sotw-album" onclick="gotoSong()">
-          <div id="sotw-shadow"></div>
-          <div id="sotw-disc">
-            <div id="sotw-disc-shadow"></div>
-            <div id="sotw-disc-inner">
-              <div id="sotw-disc-label" style="background-image: url($coverSm$)">
-                <div id="sotw-disc-hole"></div>
-                <span id="sotw-disc-title"></span>
-              </div>
-            </div>
-          </div>
-          <div id="sotw-case" style="background-image: url($coverLg$)">
-          </div>
-        </div>
-        <div id="sotw-titles" class="flex-col" style="width:100%; justify-content:space-between">
-          <div>
-              <h1>Song of the Week</h1>
-              <h2 id="sotw-date">($published$)</h2>
-          </div>
-          <div class="flex-row" style="justify-content:space-between;">
-            <div>
-              <h2>$song$</h2>
-              <h3 id="sotw-date">by $artist$</h3>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      <div class="box">
-          $body$
-      </div>
+    $partial("_templates/sotw_partial.html")$
+
+    <h1 style="margin-top:0.5em">Archive</h1>
+    <div id="sotw-playlist" class="box flex-col">
+        $for(posts)$
+           <a href="$url$" class="playlist-item flex-row">
+             <div class="playlist-item-info flex-row">
+               <img src="$coverSm$" width="70px" height="70px" />
+               <div class="flex-col" style="margin-left:1em">
+                 <div class="song-title">$song$</div>
+                 <div>$artist$</div>
+               </div>
+             </div>
+             $published$
+           </a>
+        $endfor$
     </div>
   </div>
 </body>

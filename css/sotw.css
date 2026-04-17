@@ -157,3 +157,35 @@
 #footnotes p {
     margin: 0.3em;
 }
+
+#sotw-playlist {
+    padding: 0.5em 0 !important;
+}
+
+.playlist-item {
+    color: #d6d6d6;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.playlist-item:hover {
+    background: #000000aa;
+}
+
+.playlist-item .song-title {
+    color:white;
+    font-weight:bold;
+    transition: color 0.2s ease-in-out;
+}
+
+.playlist-item:hover .song-title {
+    color:inherit;
+    font-weight:bold;
+}
+
+.playlist-item-info {
+    align-items: center;
+}
