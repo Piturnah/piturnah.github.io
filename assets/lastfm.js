@@ -1,5 +1,5 @@
 function get_lastfm() {
-    const url = "https://api.piturnah.xyz/lastfm-current";
+    const url = "https://api.piturnah.xyz/lastfm-current/Piturnah";
     fetch(url)
         .then((response) => response.text())
         .then((text) => {
