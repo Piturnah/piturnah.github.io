@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>piturnah.xyz</title>
+    <link href="https://piturnah.xyz/atom.xml" rel="self" />
+    <link href="https://piturnah.xyz" />
+    <id>https://piturnah.xyz/atom.xml</id>
+    <author>
+        <name>Peter Hebden</name>
+        
+    </author>
+    <updated>2025-10-23T00:00:00Z</updated>
+    <entry>
+    <title>Rest In Peace, Daniel "Danya" Naroditsky</title>
+    <link href="https://piturnah.xyz/blog/rip-daniel-naroditsky/index.html" />
+    <id>https://piturnah.xyz/blog/rip-daniel-naroditsky/index.html</id>
+    <published>2025-10-23</published>
+    <updated>2025-10-23T00:00:00Z</updated>
+    <summary type="html"><![CDATA[A small tribute to a legend of our time.]]></summary>
+</entry>
+<entry>
+    <title>The Unreasonable Effectfulness of Haskell</title>
+    <link href="https://piturnah.xyz/blog/haskell-is-effectful/index.html" />
+    <id>https://piturnah.xyz/blog/haskell-is-effectful/index.html</id>
+    <published>2025-03-14</published>
+    <updated>2025-03-14T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Haskell is effectful.]]></summary>
+</entry>
+<entry>
+    <title>Rewriting my site in Haskell (using Hakyll)</title>
+    <link href="https://piturnah.xyz/blog/rewriting-my-site-in-haskell/index.html" />
+    <id>https://piturnah.xyz/blog/rewriting-my-site-in-haskell/index.html</id>
+    <published>2025-03-13</published>
+    <updated>2025-03-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[I rewrote this website in Haskell.]]></summary>
+</entry>
+<entry>
+    <title>Understanding the Fin type</title>
+    <link href="https://piturnah.xyz/blog/understanding-fin-type/index.html" />
+    <id>https://piturnah.xyz/blog/understanding-fin-type/index.html</id>
+    <published>2025-02-21</published>
+    <updated>2025-02-21T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Wrapping our heads around why the common `Fin` type actually does what it says.]]></summary>
+</entry>
+<entry>
+    <title>Building a Choose-Your-Own-Adventure Style Text Game Using Day 1 Haskell</title>
+    <link href="https://piturnah.xyz/blog/haskell-cyoa-day-1/index.html" />
+    <id>https://piturnah.xyz/blog/haskell-cyoa-day-1/index.html</id>
+    <published>2024-11-09</published>
+    <updated>2024-11-09T00:00:00Z</updated>
+    <summary type="html"><![CDATA[An introductory tutorial for Haskell programming.]]></summary>
+</entry>
+
+</feed>
